@@ -50,20 +50,29 @@ class AllProducts extends React.Component {
       updatedList: [],
       sortedList: [],
       reRender: '',
+      dataInCompDidUpdate: '',
     };
 
     console.log('inside constructor');
-
-    //this.props.getProducts();
   }
+  myFunction = () => {
+    this.setState({
+      updatedList: this.props.data,
+      dataFetched: 'fetched',
+    });
+  };
 
-  componentDidMount = () => {
+  componentDidMount() {
+    this.props.getProducts();
+
+    //this.myFunction();
+
+    setTimeout(this.myFunction, 1500);
+
     console.log('entering comp did mount...');
-    if (this.state.dataFetched == '') {
-      this.props.getProducts();
-      this.setState({dataFetched: 'fetched', updatedList: this.props.data});
-      console.log('this.props.data....', this.props.data);
-    }
+
+    console.log('after dispatch, props.data is ...', this.props.data);
+
     if (this.state.categoryFetched === '') {
       this.props.getAllCategory();
       this.setState({categoryFetched: 'fetched'});
@@ -74,8 +83,8 @@ class AllProducts extends React.Component {
       this.setState({colorFetched: 'fetched'});
     }
 
-    this.setState({updatedList: this.props.data});
-  };
+    // this.setState({updatedList: this.props.data});
+  }
 
   sortByPriceUp = () => {
     if (this.state.sortBy !== 'price_up') {
@@ -171,13 +180,22 @@ class AllProducts extends React.Component {
     );
   };
 
+  componentDidUpdate() {
+    // console.log(
+    //   'inside comopnent did update..this.props.data is ...',
+    //   this.props.data,
+    // );
+    // if (this.state.dataInCompDidUpdate === '') {
+    //   this.setState({
+    //     updatedList: this.props.data,
+    //     dataInCompDidUpdate: 'gotit',
+    //   });
+    // }
+    // console.log('comp did update. updatedList ....', this.state.updatedList);
+    // console.log('dataincompdidupdate....', this.state.dataInCompDidUpdate);
+  }
+
   render() {
-    console.log('inside render...');
-    console.log('updatedList...', this.state.updatedList);
-    console.log(
-      'data Fetched inside comp did mount is ...',
-      this.state.dataFetched,
-    );
     var CATEGORY = [...this.props.categories];
     var COLORS = [...this.props.allColors];
 
@@ -249,7 +267,16 @@ class AllProducts extends React.Component {
               name="funnel-outline"
               size={28}
               color={Colors.GREY}
-              onPress={() => this.setState({showFiterModal: true})}
+              onPress={() =>
+                this.setState({
+                  showFiterModal: true,
+                  categorySelected: '',
+                  colorSelected: '',
+                  filterApplied: '',
+
+                  updatedList: this.props.data,
+                })
+              }
             />
           </TouchableOpacity>
 
@@ -297,7 +324,8 @@ class AllProducts extends React.Component {
         </View>
 
         {this.state.sortedList.length === 0 &&
-        this.state.updatedList.length === 0 ? (
+        this.state.updatedList.length === 0 &&
+        this.state.dataFetched !== '' ? (
           <Image
             source={require('../../assets/images/no_data_available.png')}
             style={styles.imgStyle}
@@ -318,6 +346,8 @@ class AllProducts extends React.Component {
               description={item.description}
               price={item.price}
               stars={item.avgRating}
+              features={item.features}
+              subImages={item.subImagesUrl}
               {...this.props}
             />
           )}

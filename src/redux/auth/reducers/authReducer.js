@@ -1,11 +1,10 @@
 import * as types from '../actions/actionTypes';
-
-const loginReducer = (state = {email: ''}, action) => {
+const initialState = {name: ''};
+const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.LOGIN:
       return {
-        ...state,
-        email: action.payload,
+        name: action.payload,
       };
 
     case types.ERROR:

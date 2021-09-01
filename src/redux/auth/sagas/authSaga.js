@@ -77,9 +77,9 @@ export function* workerLoginAsyncTesting(action) {
       );
       return result;
     });
-
+    console.log('resonse...', response);
     if (response.status == 200) {
-      yield put({type: types.LOGIN, payload: action.payload.email});
+      yield put({type: types.LOGIN, payload: response.data.data.firstName});
 
       action.navigation.navigate('AllProducts');
     }
