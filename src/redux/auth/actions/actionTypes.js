@@ -1,0 +1,25 @@
+export const SUCCESS = 'SUCCESS';
+export const ERROR = 'ERROR';
+
+// FOR LOGIN
+
+export const LOGIN = 'LOGIN';
+export const LOGIN_ASYNC = 'LOGIN_ASYNC';
+
+// FOR REGISTER
+
+export const REGISTER = 'REGISTER';
+export const REGISTER_ASYNC = 'REGISTER_ASYNC';
+
+// FOR FETCHING ALL PRODUCTS
+
+export const ALL_PRODUCTS_ASYNC = 'ALL_PRODUCTS_ASYNC';
+export const ALL_PRODUCTS = 'ALL_PRODUCTS';
+export const CLEAR_STATE = 'CLEAR_STATE';
+
+// FETCHING COLOR AND CATEGORY
+
+export const GET_CATEGORY_ASYNC = 'GET_CATEGORY_ASYNC';
+export const GET_COLOR_ASYNC = 'GET_COLOR_ASYNC';
+export const GET_CATEGORY = 'GET_CATEGORY';
+export const GET_COLOR = 'GET_COLOR';
