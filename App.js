@@ -8,6 +8,7 @@ import rootReducer from './src/redux/auth/reducers/index';
 import loginReducer from './src/redux/auth/reducers/authReducer';
 import allReducers from './src/redux/auth/reducers/index';
 import {rootSaga} from './src/redux/auth/sagas/authSaga';
+import Toast from 'react-native-toast-message';
 
 import DrawerNavigations from './src/containers/navigation/AppNavigations';
 import Login from './src/containers/screens/login';
@@ -24,6 +25,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <DrawerNavigations />
+        <Toast ref={(ref) => Toast.setRef(ref)} />
       </Provider>
     );
   }

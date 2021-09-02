@@ -9,6 +9,7 @@ import Login from '../screens/login';
 import Register from '../screens/register';
 import AllProducts from '../screens/allProducts';
 import ProductDetail from '../screens/productDetail';
+import Cart from '../screens/cart';
 import Header from '../../components/header';
 import PlainHeader from '../../components/plainHeader';
 import CreateAccount from '../screens/createAccount';
@@ -53,6 +54,13 @@ const DrawerNavigations = () => {
         <Drawer.Screen
           name="ProductDetail"
           component={ProductDetail}
+          options={{
+            header: (props) => <PlainHeader {...props} />,
+          }}
+        />
+        <Drawer.Screen
+          name="Cart"
+          component={Cart}
           options={{
             header: (props) => <PlainHeader {...props} />,
           }}

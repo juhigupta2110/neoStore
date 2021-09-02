@@ -8,20 +8,15 @@ import {
   TextInput,
   Picker,
 } from 'react-native';
-import {
-  Menu,
-  MenuProvider,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
-
+import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/Feather';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
+import Toast, {BaseToast} from 'react-native-toast-message';
 
 import {Colors} from '../../assets/styles/colors';
 import * as authActions from '../../redux/auth/actions/authActions';
@@ -34,8 +29,27 @@ class Login extends React.Component {
       email: '',
       password: '',
       selectedValue: 'java',
+      emailValidate: true,
+      eye: false,
     };
   }
+
+  handleValidEmail = (val) => {
+    let emailChk =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (!emailChk.test(val)) {
+      this.setState({
+        emailValidate: false,
+      });
+    } else this.setState({emailValidate: true});
+  };
+
+  handleEyeClick = () => {
+    this.setState({
+      eye: !this.state.eye,
+    });
+  };
 
   handleClick = () => {
     let data = {
@@ -43,7 +57,15 @@ class Login extends React.Component {
       password: this.state.password,
     };
 
-    this.props.loginFunction(data, this.props.navigation);
+    this.state.email === '' || this.state.emailValidate === false
+      ? this.showToastMsg('enter valid credentials')
+      : this.props.loginFunction(data, this.props.navigation);
+  };
+
+  showToastMsg = (msg) => {
+    Toast.show({
+      text1: msg,
+    });
   };
 
   render() {
@@ -52,22 +74,60 @@ class Login extends React.Component {
         <Text style={styles.helloTextStyle}>Hello there!</Text>
         <Text style={styles.createAccountStyle}>Login to your Account</Text>
         <View>
-          <TextInput
-            style={styles.textInputStyle}
-            autoCapitalize="none"
-            placeholder="Email Address"
-            onChangeText={(text) => this.setState({email: text})}
-          />
-          <TextInput
-            style={styles.textInputStyle}
-            autoCapitalize="none"
-            placeholder="Password"
-            onChangeText={(text) => this.setState({password: text})}
-          />
+          <View style={styles.passwordViewStyle}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="Enter Email"
+              autoCapitalize="none"
+              maxLength={30}
+              autoCorrect={false}
+              onEndEditing={(e) => this.handleValidEmail(e.nativeEvent.text)}
+              onChangeText={(text) => this.setState({email: text})}
+            />
+          </View>
+          {this.state.emailValidate ? null : (
+            <Animatable.View
+              animation="fadeInLeft"
+              useNativeDriver={true}
+              duration={500}
+              style={styles.errorInputViewStyle}>
+              <Text style={styles.errorFormInputStyle}>Invalid email</Text>
+            </Animatable.View>
+          )}
+          <View style={styles.passwordViewStyle}>
+            <TextInput
+              style={styles.textInputStyle}
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholder="Password"
+              secureTextEntry={this.state.eye ? false : true}
+              onChangeText={(text) => this.setState({password: text})}
+            />
+
+            {this.state.eye ? (
+              <Icons
+                name="eye"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={this.handleEyeClick}
+              />
+            ) : (
+              <Icons
+                name="eye-off"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={this.handleEyeClick}
+              />
+            )}
+          </View>
 
           <TouchableOpacity
             style={styles.signUpStyle}
-            onPress={() => this.handleClick()}>
+            onPress={() => this.handleClick()}
+            //{() => this.handleClick()}
+          >
             <Text style={styles.signUpTextStyle}>Login</Text>
           </TouchableOpacity>
 
@@ -114,14 +174,18 @@ const styles = StyleSheet.create({
 
     marginBottom: hp('3%'),
   },
+  errorInputViewStyle: {
+    alignSelf: 'flex-start',
+  },
+  errorFormInputStyle: {
+    color: Colors.RED,
+  },
   textInputStyle: {
     marginVertical: hp('1%'),
-    width: wp('90%'),
+    width: wp('80%'),
     height: hp('5%'),
     paddingLeft: wp('0.5%'),
     fontSize: 18,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.GREY,
   },
   signUpStyle: {
     width: wp('90%'),
@@ -157,4 +221,11 @@ const styles = StyleSheet.create({
     padding: 2,
     fontSize: 20,
   },
+  passwordViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.GREY,
+  },
+  eyeIconStyle: {},
 });

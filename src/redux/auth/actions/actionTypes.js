@@ -23,3 +23,11 @@ export const GET_CATEGORY_ASYNC = 'GET_CATEGORY_ASYNC';
 export const GET_COLOR_ASYNC = 'GET_COLOR_ASYNC';
 export const GET_CATEGORY = 'GET_CATEGORY';
 export const GET_COLOR = 'GET_COLOR';
+
+// ADDING AND FETCHING FROM CART
+
+export const ADD_T0_CART_ASYNC = 'ADD_T0_CART_ASYNC';
+export const ADD_T0_CART = 'ADD_T0_CART';
+export const CLEAR_ADDED_TO_CART = 'CLEAR_ADDED_TO_CART';
+export const GET_CART_ASYNC = 'GET_CART_ASYNC';
+export const GET_CART = 'GET_CART';

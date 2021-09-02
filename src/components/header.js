@@ -23,7 +23,11 @@ const Header = (props) => {
           />
         </View>
         <View style={styles.rightViewStyle}>
-          <Icons name="cart-outline" size={30} />
+          <Icons
+            name="cart-outline"
+            size={30}
+            onPress={() => props.navigation.navigate('Cart')}
+          />
           <Icons
             name="md-person-outline"
             size={28}

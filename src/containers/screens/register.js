@@ -9,11 +9,14 @@ import {
   RadioButton,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/Feather';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {connect} from 'react-redux';
+import Toast, {BaseToast} from 'react-native-toast-message';
+import * as Animatable from 'react-native-animatable';
 
 import {Colors} from '../../assets/styles/colors';
 import * as authActions from '../../redux/auth/actions/authActions';
@@ -31,8 +34,44 @@ class Register extends React.Component {
       password: '',
       confirmPassword: '',
       mobile: 123456,
+      emailValidate: true,
+      eye: false,
     };
   }
+
+  handleValidEmail = (val) => {
+    let emailChk =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (!emailChk.test(val)) {
+      this.setState({
+        emailValidate: false,
+      });
+    } else this.setState({emailValidate: true});
+  };
+
+  handleEyeClick = () => {
+    this.setState({
+      eye: !this.state.eye,
+    });
+  };
+
+  handleRegisterClick = () => {
+    let data = {
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    this.state.email === '' || this.state.emailValidate === false
+      ? this.showToastMsg('enter valid credentials')
+      : this.props.loginFunction(data, this.props.navigation);
+  };
+
+  showToastMsg = (msg) => {
+    Toast.show({
+      text1: msg,
+    });
+  };
 
   handleClick = () => {
     let mobileNum = parseInt(this.state.mobile);
@@ -47,9 +86,9 @@ class Register extends React.Component {
       confirm_password: this.state.confirmPassword,
     };
 
-    console.log('data going...', data);
-
-    this.props.registerFunction(data, this.props.navigation);
+    this.state.email === '' || this.state.emailValidate === false
+      ? this.showToastMsg('enter valid credentials')
+      : this.props.registerFunction(data, this.props.navigation);
   };
 
   handleRadioButtonClick = (gender) => {
@@ -79,11 +118,22 @@ class Register extends React.Component {
           />
           <TextInput
             style={styles.textInputStyle}
-            placeholder="Last name"
-            maxLength={20}
+            placeholder="Enter Email"
             autoCapitalize="none"
+            maxLength={30}
+            autoCorrect={false}
+            onEndEditing={(e) => this.handleValidEmail(e.nativeEvent.text)}
             onChangeText={(text) => this.setState({lastName: text})}
           />
+          {this.state.emailValidate ? null : (
+            <Animatable.View
+              animation="fadeInLeft"
+              useNativeDriver={true}
+              duration={500}
+              style={styles.errorInputViewStyle}>
+              <Text style={styles.errorFormInputStyle}>Invalid email</Text>
+            </Animatable.View>
+          )}
           <TextInput
             style={styles.textInputStyle}
             placeholder="Email Address"
@@ -206,6 +256,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderBottomWidth: 0.5,
     borderBottomColor: Colors.GREY,
+  },
+  errorInputViewStyle: {
+    alignSelf: 'flex-start',
+  },
+  errorFormInputStyle: {
+    color: Colors.RED,
   },
   signUpStyle: {
     width: wp('90%'),

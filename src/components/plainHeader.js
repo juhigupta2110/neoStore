@@ -8,10 +8,17 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import Icons from 'react-native-vector-icons/Ionicons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
 
 import {Colors} from '../assets/styles/colors';
+import * as authActions from '../redux/auth/actions/authActions';
 
 const PlainHeader = (props) => {
+  const clickHandler = () => {
+    props.getCart(props.logger.token);
+    props.navigation.navigate('Cart');
+  };
+  console.log('props coming in plain header...', props);
   return (
     <View>
       <View style={styles.mainViewStyle}>
@@ -22,8 +29,11 @@ const PlainHeader = (props) => {
             onPress={() => props.navigation.goBack()}
           />
         </View>
+        <View style={styles.pageNameViewStyle}>
+          <Text style={styles.pageNameTextStyle}>{props.route.name}</Text>
+        </View>
         <View style={styles.rightViewStyle}>
-          <Icons name="cart-outline" size={30} />
+          <Icons name="cart-outline" size={30} onPress={() => clickHandler()} />
           <Icons
             name="md-person-outline"
             size={28}
@@ -35,13 +45,25 @@ const PlainHeader = (props) => {
   );
 };
 
-export default PlainHeader;
+const mapStateToProps = (state) => ({
+  logger: state.loginReducer,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCart: (authKey) => {
+      dispatch(authActions.getCart(authKey));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlainHeader);
 
 const styles = StyleSheet.create({
   mainViewStyle: {
-    // backgroundColor: Colors.HeaderColor1,
-    height: hp('9%'),
-    justifyContent: 'space-between',
+    backgroundColor: Colors.tabYellowColor,
+    height: hp('10%'),
+    justifyContent: 'space-evenly',
     flexDirection: 'row',
     paddingHorizontal: wp('5%'),
     paddingTop: hp('5%'),
@@ -55,6 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginRight: wp('3%'),
   },
   searchViewStyle: {
     justifyContent: 'center',
@@ -73,5 +96,13 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: wp('2%'),
     fontSize: 18,
+  },
+  pageNameViewStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: wp('20%'),
+  },
+  pageNameTextStyle: {
+    fontSize: 20,
   },
 });

@@ -18,8 +18,17 @@ class RenderProduct extends React.Component {
     let img = this.props.imageUrl || '';
     let newImg = img.slice(35, img.length);
 
+    let subImgs = this.props.subImages || [];
+    let newSubImg = [];
+
+    for (var i = 0; i < subImgs.length; i++) {
+      let k = subImgs[i].slice(35, subImgs[i].length);
+      newSubImg.push(k);
+    }
+
     this.state = {
       img: newImg,
+      subs: newSubImg,
     };
   }
 
@@ -28,7 +37,10 @@ class RenderProduct extends React.Component {
       <View style={styles.mainCompStyle}>
         <TouchableOpacity
           onPress={() =>
-            this.props.navigation.navigate('ProductDetail', {...this.props})
+            this.props.navigation.navigate('ProductDetail', {
+              ...this.props,
+              subs: this.state.subs,
+            })
           }>
           <View>
             {this.state.img == '' ? (

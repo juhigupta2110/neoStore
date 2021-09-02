@@ -3,6 +3,7 @@ import {takeEvery, put, call, takeLatest, all} from 'redux-saga/effects';
 import * as types from '../actions/actionTypes';
 import {apiService} from '../../../libs/apiCalls';
 import axios from 'axios';
+import Toast, {BaseToast} from 'react-native-toast-message';
 
 var responseCode;
 
@@ -12,6 +13,62 @@ function onResponseRegister(res) {
 }
 
 //WORKER SAGA
+
+export function* workerGetCartAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.get(
+        'https://neostore-api.herokuapp.com/api/cart',
+
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log('response from GETTING from cart', response.data.data);
+
+      yield put({type: types.GET_CART, payload: response.data.data});
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in getting from cart...', e.response.data.message);
+  }
+}
+
+export function* workerAddToCartAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.post(
+        'https://neostore-api.herokuapp.com/api/cart',
+        action.payload,
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log('response from additn to cart', response);
+      Toast.show({
+        text1: 'Product added to cart !!',
+      });
+      // yield put({type: types.ADD_T0_CART});
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in adding to cart...', e.response.data.message);
+  }
+}
 
 export function* workerAllColorAsync() {
   try {
@@ -27,7 +84,7 @@ export function* workerAllColorAsync() {
       yield put({type: types.GET_COLOR, payload: data});
     }
   } catch (e) {
-    console.log('error in get color worker...', e);
+    console.log('error in get color worker...', e.response);
   }
 }
 
@@ -45,7 +102,7 @@ export function* workerAllCategoryAsync() {
       yield put({type: types.GET_CATEGORY, payload: data});
     }
   } catch (e) {
-    console.log('error in get category worker...', e);
+    console.log('error in get category worker...', e.response);
   }
 }
 
@@ -64,7 +121,7 @@ export function* workerAllProductsAsync() {
       yield put({type: types.ALL_PRODUCTS, payload: data});
     }
   } catch (e) {
-    console.log('error in all products worker...', e);
+    console.log('error in all products worker...', e.response);
   }
 }
 
@@ -79,12 +136,24 @@ export function* workerLoginAsyncTesting(action) {
     });
     console.log('resonse...', response);
     if (response.status == 200) {
-      yield put({type: types.LOGIN, payload: response.data.data.firstName});
+      Toast.show({
+        text1: 'Login successful',
+      });
+      yield put({
+        type: types.LOGIN,
+        payload: {
+          name: response.data.data.firstName,
+          token: response.data.data.token,
+        },
+      });
 
       action.navigation.navigate('AllProducts');
     }
   } catch (e) {
-    console.log('error is...', e);
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error is...', e.response);
   }
 }
 
@@ -116,6 +185,14 @@ export function* watchGetColorAsync() {
   yield takeEvery(types.GET_COLOR_ASYNC, workerAllColorAsync);
 }
 
+export function* watchAddToCartAsync() {
+  yield takeEvery(types.ADD_T0_CART_ASYNC, workerAddToCartAsync);
+}
+
+export function* watchGetCartAsync() {
+  yield takeEvery(types.GET_CART_ASYNC, workerGetCartAsync);
+}
+
 // COMBINING SAGAS
 export function* rootSaga() {
   yield all([
@@ -124,5 +201,7 @@ export function* rootSaga() {
     watchAllProductsAsync(),
     watchGetCategoryAsync(),
     watchGetColorAsync(),
+    watchAddToCartAsync(),
+    watchGetCartAsync(),
   ]);
 }

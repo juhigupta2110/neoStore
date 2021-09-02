@@ -67,7 +67,7 @@ class AllProducts extends React.Component {
 
     //this.myFunction();
 
-    setTimeout(this.myFunction, 1500);
+    setTimeout(this.myFunction, 2000);
 
     console.log('entering comp did mount...');
 
@@ -348,6 +348,7 @@ class AllProducts extends React.Component {
               stars={item.avgRating}
               features={item.features}
               subImages={item.subImagesUrl}
+              id={item.id}
               {...this.props}
             />
           )}

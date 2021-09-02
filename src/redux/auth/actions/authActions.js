@@ -51,3 +51,24 @@ export const getColor = () => {
     type: types.GET_COLOR_ASYNC,
   };
 };
+
+export const addToCartAsync = (data, authKey) => {
+  return {
+    type: types.ADD_T0_CART_ASYNC,
+    payload: data,
+    authKey,
+  };
+};
+
+export const getCart = (authKey) => {
+  return {
+    type: types.GET_CART_ASYNC,
+    authKey,
+  };
+};
+
+export const clearAddToCart = () => {
+  return {
+    type: types.CLEAR_ADDED_TO_CART,
+  };
+};
