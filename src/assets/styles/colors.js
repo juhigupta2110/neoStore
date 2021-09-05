@@ -1,7 +1,7 @@
 export const Colors = {
   GREY: 'grey',
   LIGHTGREY: '#f9f5db',
-  LIGHTYELLOW: '#08d4c4',
+  LIGHTYELLOW: '#f7d096',
   DARKYELLOW: '#01ab9d',
   InputTextColor: '#05375a',
   WHITE: 'white',

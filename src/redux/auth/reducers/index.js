@@ -4,6 +4,8 @@ import allProductsReducer from './allProducts';
 import allCategoryReducer from './allCategory';
 import allColorReducer from './allColor';
 import getCartReducer from './getCart';
+import getAddressReducer from './getAddress';
+import allOrdersReducer from './allOrders';
 
 export default combineReducers({
   loginReducer,
@@ -11,4 +13,6 @@ export default combineReducers({
   allCategoryReducer,
   allColorReducer,
   getCartReducer,
+  getAddressReducer,
+  allOrdersReducer,
 });

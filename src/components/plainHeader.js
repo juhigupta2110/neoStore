@@ -18,7 +18,7 @@ const PlainHeader = (props) => {
     props.getCart(props.logger.token);
     props.navigation.navigate('Cart');
   };
-  console.log('props coming in plain header...', props);
+
   return (
     <View>
       <View style={styles.mainViewStyle}>

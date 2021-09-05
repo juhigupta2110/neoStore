@@ -72,3 +72,81 @@ export const clearAddToCart = () => {
     type: types.CLEAR_ADDED_TO_CART,
   };
 };
+
+export const updateQuantityAsync = (authKey, productId, data, refreshCart) => {
+  return {
+    type: types.UPDATE_QUANTITY_ASYNC,
+    payload: data,
+    authKey,
+    productId,
+    refreshCart,
+  };
+};
+
+export const deleteCartItemAsync = (authKey, productId, refreshCart) => {
+  return {
+    type: types.DELETE_FROM_CART_ASYNC,
+    authKey,
+    productId,
+    refreshCart,
+  };
+};
+
+export const getAddressAsync = (authKey) => {
+  return {
+    type: types.GET_ADDRESS_ASYNC,
+    authKey,
+  };
+};
+
+export const addAddressAsync = (authKey, data, navigation, refresh) => {
+  return {
+    type: types.ADD_ADDRESS_ASYNC,
+    payload: data,
+    navigation,
+    authKey,
+    refresh,
+  };
+};
+
+export const deleteAddressAsync = (authKey, addressId, refresh) => {
+  return {
+    type: types.DELETE_ADDRESS_ASYNC,
+    authKey,
+    refresh,
+    addressId,
+  };
+};
+
+export const editAddressAsync = (
+  authKey,
+  addressId,
+  data,
+  navigation,
+  refresh,
+) => {
+  return {
+    type: types.EDIT_ADDRESS_ASYNC,
+    payload: data,
+    navigation,
+    refresh,
+    authKey,
+    addressId,
+  };
+};
+
+export const placeOrderAsync = (authKey, data, refresh) => {
+  return {
+    type: types.PLACE_ORDER_ASYNC,
+    payload: data,
+    refresh,
+    authKey,
+  };
+};
+
+export const viewOrdersAsync = (authKey) => {
+  return {
+    type: types.VIEW_ORDERS_ASYNC,
+    authKey,
+  };
+};

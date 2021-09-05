@@ -14,6 +14,242 @@ function onResponseRegister(res) {
 
 //WORKER SAGA
 
+export function* workerViewOrdersAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.get(
+        `https://neostore-api.herokuapp.com/api/order`,
+
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log('response for order list...', response.data.data.orders);
+      let data = response.data.data.orders;
+      yield put({type: types.VIEW_ORDERS, payload: data});
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in getting order list..', e.response);
+  }
+}
+
+export function* workerPlaceOrderAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.post(
+        'https://neostore-api.herokuapp.com/api/order/place',
+        action.payload,
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status === 200) {
+      console.log('response for added address..', response);
+      Toast.show({
+        text1: response.message,
+      });
+      action.refresh();
+
+      // setTimeout(() => action.navigation.navigate('ShippingAddresses'), 1500);
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in add address..', e.response);
+  }
+}
+
+export function* workerEditAddressAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.put(
+        `https://neostore-api.herokuapp.com/api/user/address/${action.addressId}`,
+        action.payload,
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log('response for update address..', response);
+      Toast.show({
+        text1: response.data.message,
+      });
+      action.refresh();
+      action.navigation.navigate('ShippingAddresses');
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in update address..', e.response.data.message);
+  }
+}
+
+export function* workerDeleteAddressAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.delete(
+        `https://neostore-api.herokuapp.com/api/user/address/${action.addressId}`,
+
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log('response for delete address..', response);
+      Toast.show({
+        text1: response.data.message,
+      });
+      action.refresh();
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in delete address..', e.response);
+  }
+}
+
+export function* workerAddAddressAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.post(
+        'https://neostore-api.herokuapp.com/api/user/address',
+        action.payload,
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status === 200) {
+      console.log('response for added address..', response);
+      Toast.show({
+        text1: response.message,
+      });
+      action.refresh();
+
+      setTimeout(() => action.navigation.navigate('ShippingAddresses'), 1500);
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in add address..', e.response);
+  }
+}
+
+export function* workerGetAdressesAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.get(
+        `https://neostore-api.herokuapp.com/api/user/address`,
+
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log(
+        'response.dta.data for getting address list...',
+        response.data.data.address,
+      );
+      let data = response.data.data.address;
+      yield put({type: types.GET_ADDRESS, payload: data});
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in getting address list..', e.response);
+  }
+}
+
+export function* workerDeleteProductFromCartAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.delete(
+        `https://neostore-api.herokuapp.com/api/cart/${action.productId}`,
+
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log('response for delete from cart..', response);
+      Toast.show({
+        text1: response.data.message,
+      });
+      action.refreshCart();
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in delete from cart..', e.response);
+  }
+}
+
+export function* workerUpdateQuatityAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.put(
+        `https://neostore-api.herokuapp.com/api/cart/${action.productId}`,
+        action.payload,
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status == 200) {
+      console.log('response for update cart..', response);
+      Toast.show({
+        text1: response.data.message,
+      });
+      action.refreshCart();
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in increaseing quantity..', e.response.data.message);
+  }
+}
+
 export function* workerGetCartAsync(action) {
   try {
     const response = yield call(async () => {
@@ -35,9 +271,9 @@ export function* workerGetCartAsync(action) {
     }
   } catch (e) {
     Toast.show({
-      text1: e.response.data.message,
+      text1: e.response,
     });
-    console.log('error in getting from cart...', e.response.data.message);
+    console.log('error in getting from cart...', e.response);
   }
 }
 
@@ -58,7 +294,7 @@ export function* workerAddToCartAsync(action) {
     if (response.status == 200) {
       console.log('response from additn to cart', response);
       Toast.show({
-        text1: 'Product added to cart !!',
+        text1: response.data.message,
       });
       // yield put({type: types.ADD_T0_CART});
     }
@@ -137,7 +373,7 @@ export function* workerLoginAsyncTesting(action) {
     console.log('resonse...', response);
     if (response.status == 200) {
       Toast.show({
-        text1: 'Login successful',
+        text1: response.data.message,
       });
       yield put({
         type: types.LOGIN,
@@ -193,6 +429,41 @@ export function* watchGetCartAsync() {
   yield takeEvery(types.GET_CART_ASYNC, workerGetCartAsync);
 }
 
+export function* watchUpdateQuatityAsync() {
+  yield takeEvery(types.UPDATE_QUANTITY_ASYNC, workerUpdateQuatityAsync);
+}
+
+export function* watchDeleteProductFromCartAsync() {
+  yield takeEvery(
+    types.DELETE_FROM_CART_ASYNC,
+    workerDeleteProductFromCartAsync,
+  );
+}
+
+export function* watchGetAddressesAsync() {
+  yield takeEvery(types.GET_ADDRESS_ASYNC, workerGetAdressesAsync);
+}
+
+export function* watchAddAddressAsync() {
+  yield takeEvery(types.ADD_ADDRESS_ASYNC, workerAddAddressAsync);
+}
+
+export function* watchDeleteAddressAsync() {
+  yield takeEvery(types.DELETE_ADDRESS_ASYNC, workerDeleteAddressAsync);
+}
+
+export function* watchEditAddressAsync() {
+  yield takeEvery(types.EDIT_ADDRESS_ASYNC, workerEditAddressAsync);
+}
+
+export function* watchPlaceOrderAysnc() {
+  yield takeEvery(types.PLACE_ORDER_ASYNC, workerPlaceOrderAsync);
+}
+
+export function* watchViewOrdersAsync() {
+  yield takeEvery(types.VIEW_ORDERS_ASYNC, workerViewOrdersAsync);
+}
+
 // COMBINING SAGAS
 export function* rootSaga() {
   yield all([
@@ -203,5 +474,13 @@ export function* rootSaga() {
     watchGetColorAsync(),
     watchAddToCartAsync(),
     watchGetCartAsync(),
+    watchUpdateQuatityAsync(),
+    watchDeleteProductFromCartAsync(),
+    watchGetAddressesAsync(),
+    watchAddAddressAsync(),
+    watchDeleteAddressAsync(),
+    watchEditAddressAsync(),
+    watchPlaceOrderAysnc(),
+    watchViewOrdersAsync(),
   ]);
 }

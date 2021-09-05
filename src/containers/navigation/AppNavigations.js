@@ -10,6 +10,10 @@ import Register from '../screens/register';
 import AllProducts from '../screens/allProducts';
 import ProductDetail from '../screens/productDetail';
 import Cart from '../screens/cart';
+import PlaceOrder from '../screens/placeOrder';
+import ShippingAddresses from '../screens/shippingAddresses';
+import AddAddress from '../screens/addAddress';
+import EditAddress from '../screens/editAddress';
 import Header from '../../components/header';
 import PlainHeader from '../../components/plainHeader';
 import CreateAccount from '../screens/createAccount';
@@ -61,6 +65,34 @@ const DrawerNavigations = () => {
         <Drawer.Screen
           name="Cart"
           component={Cart}
+          options={{
+            header: (props) => <PlainHeader {...props} />,
+          }}
+        />
+        <Drawer.Screen
+          name="PlaceOrder"
+          component={PlaceOrder}
+          options={{
+            header: (props) => <PlainHeader {...props} />,
+          }}
+        />
+        <Drawer.Screen
+          name="ShippingAddresses"
+          component={ShippingAddresses}
+          options={{
+            header: (props) => <PlainHeader {...props} />,
+          }}
+        />
+        <Drawer.Screen
+          name="AddAddress"
+          component={AddAddress}
+          options={{
+            header: (props) => <PlainHeader {...props} />,
+          }}
+        />
+        <Drawer.Screen
+          name="EditAddress"
+          component={EditAddress}
           options={{
             header: (props) => <PlainHeader {...props} />,
           }}

@@ -21,42 +21,6 @@ class RenderCartItems extends React.Component {
     };
   }
 
-  updateQuantity = (todo) => {
-    //this.props.refreshScreen();
-    let data;
-    if (todo === 'plus') {
-      data = {
-        quantity: this.props.quantity + 1,
-      };
-    } else if (todo === 'minus') {
-      data = {
-        quantity: this.props.quantity - 1,
-      };
-    }
-
-    this.props.updateQuant(
-      this.props.logger.token,
-      this.props.id,
-      data,
-      this.refreshCart,
-    );
-
-    //setTimeout(this.props.onChange, 3000);
-  };
-
-  refreshCart = () => {
-    this.props.getCart(this.props.logger.token);
-    //setTimeout(this.props.refreshScreen(), 2000);
-  };
-
-  deleteProduct = () => {
-    this.props.deleteFromCart(
-      this.props.logger.token,
-      this.props.id,
-      this.refreshCart,
-    );
-  };
-
   render() {
     return (
       <View style={styles.topMainCompStyle}>
@@ -78,37 +42,15 @@ class RenderCartItems extends React.Component {
             </View>
             <Text style={{textAlign: 'left'}}>price: {this.props.price}</Text>
           </View>
-
-          <View style={styles.iconViewStyle}>
-            <Icon
-              name="trash-outline"
-              size={22}
-              onPress={() => this.deleteProduct()}
-            />
-          </View>
         </View>
 
         <View style={styles.updateViewStyle}>
-          <View style={styles.minusQuantityViewStyle}>
-            <Icon
-              name="remove"
-              size={22}
-              onPress={() => this.updateQuantity('minus')}
-            />
-          </View>
           <View
             style={[
               styles.minusQuantityViewStyle,
               {backgroundColor: Colors.WHITE},
             ]}>
-            <Text>{this.props.quantity}</Text>
-          </View>
-          <View style={styles.minusQuantityViewStyle}>
-            <Icon
-              name="add"
-              size={22}
-              onPress={() => this.updateQuantity('plus')}
-            />
+            <Text>Quatity: {this.props.quantity}</Text>
           </View>
         </View>
       </View>
@@ -116,29 +58,7 @@ class RenderCartItems extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  logger: state.loginReducer,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateQuant: (authKey, productId, data, refreshCart) => {
-      dispatch(
-        authActions.updateQuantityAsync(authKey, productId, data, refreshCart),
-      );
-    },
-    getCart: (authKey) => {
-      dispatch(authActions.getCart(authKey));
-    },
-    deleteFromCart: (authKey, productId, refreshCart) => {
-      dispatch(
-        authActions.deleteCartItemAsync(authKey, productId, refreshCart),
-      );
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RenderCartItems);
+export default connect()(RenderCartItems);
 
 const styles = StyleSheet.create({
   topMainCompStyle: {

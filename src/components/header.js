@@ -8,10 +8,16 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 import Icons from 'react-native-vector-icons/Ionicons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
 
 import {Colors} from '../assets/styles/colors';
+import * as authActions from '../redux/auth/actions/authActions';
 
 const Header = (props) => {
+  const clickHandler = () => {
+    props.getCart(props.logger.token);
+    props.navigation.navigate('Cart');
+  };
   return (
     <View>
       <View style={styles.mainViewStyle}>
@@ -23,11 +29,7 @@ const Header = (props) => {
           />
         </View>
         <View style={styles.rightViewStyle}>
-          <Icons
-            name="cart-outline"
-            size={30}
-            onPress={() => props.navigation.navigate('Cart')}
-          />
+          <Icons name="cart-outline" size={30} onPress={() => clickHandler()} />
           <Icons
             name="md-person-outline"
             size={28}
@@ -48,7 +50,19 @@ const Header = (props) => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  logger: state.loginReducer,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCart: (authKey) => {
+      dispatch(authActions.getCart(authKey));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 const styles = StyleSheet.create({
   mainViewStyle: {

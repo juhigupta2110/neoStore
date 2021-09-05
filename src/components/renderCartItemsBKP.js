@@ -16,13 +16,14 @@ class RenderCartItems extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log('props in renderItems...', this.props);
+
     this.state = {
       quantity: this.props.quantity,
     };
   }
 
   updateQuantity = (todo) => {
-    //this.props.refreshScreen();
     let data;
     if (todo === 'plus') {
       data = {
@@ -33,6 +34,10 @@ class RenderCartItems extends React.Component {
         quantity: this.props.quantity - 1,
       };
     }
+
+    console.log('quantity going for update cart....', data);
+    console.log('token going for update cart....', this.props.logger.token);
+    console.log('product id going for update cart....', this.props.id);
 
     this.props.updateQuant(
       this.props.logger.token,
@@ -45,16 +50,8 @@ class RenderCartItems extends React.Component {
   };
 
   refreshCart = () => {
+    console.log('refreshCart called..');
     this.props.getCart(this.props.logger.token);
-    //setTimeout(this.props.refreshScreen(), 2000);
-  };
-
-  deleteProduct = () => {
-    this.props.deleteFromCart(
-      this.props.logger.token,
-      this.props.id,
-      this.refreshCart,
-    );
   };
 
   render() {
@@ -80,11 +77,7 @@ class RenderCartItems extends React.Component {
           </View>
 
           <View style={styles.iconViewStyle}>
-            <Icon
-              name="trash-outline"
-              size={22}
-              onPress={() => this.deleteProduct()}
-            />
+            <Icon name="trash-outline" size={22} />
           </View>
         </View>
 
@@ -129,11 +122,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     getCart: (authKey) => {
       dispatch(authActions.getCart(authKey));
-    },
-    deleteFromCart: (authKey, productId, refreshCart) => {
-      dispatch(
-        authActions.deleteCartItemAsync(authKey, productId, refreshCart),
-      );
     },
   };
 };

@@ -52,8 +52,6 @@ class AllProducts extends React.Component {
       reRender: '',
       dataInCompDidUpdate: '',
     };
-
-    console.log('inside constructor');
   }
   myFunction = () => {
     this.setState({
@@ -67,11 +65,7 @@ class AllProducts extends React.Component {
 
     //this.myFunction();
 
-    setTimeout(this.myFunction, 2000);
-
-    console.log('entering comp did mount...');
-
-    console.log('after dispatch, props.data is ...', this.props.data);
+    setTimeout(this.myFunction, 1500);
 
     if (this.state.categoryFetched === '') {
       this.props.getAllCategory();
@@ -179,21 +173,6 @@ class AllProducts extends React.Component {
       item.color.name == this.state.colorSelected
     );
   };
-
-  componentDidUpdate() {
-    // console.log(
-    //   'inside comopnent did update..this.props.data is ...',
-    //   this.props.data,
-    // );
-    // if (this.state.dataInCompDidUpdate === '') {
-    //   this.setState({
-    //     updatedList: this.props.data,
-    //     dataInCompDidUpdate: 'gotit',
-    //   });
-    // }
-    // console.log('comp did update. updatedList ....', this.state.updatedList);
-    // console.log('dataincompdidupdate....', this.state.dataInCompDidUpdate);
-  }
 
   render() {
     var CATEGORY = [...this.props.categories];

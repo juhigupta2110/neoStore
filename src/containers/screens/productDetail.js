@@ -16,12 +16,8 @@ import * as authActions from '../../redux/auth/actions/authActions';
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
-    console.log(
-      'id for prodcut in product detail page....',
-      this.props.route.params.id,
-    );
     this.state = {
-      quantity: 0,
+      quantity: 1,
     };
   }
 
@@ -31,13 +27,8 @@ class ProductDetail extends React.Component {
       quantity: this.state.quantity,
     };
     let authKey = this.props.logger.token;
-    if (this.state.quantity > 0) {
-      this.props.addThisToCart(data, authKey);
-    } else {
-      Toast.show({
-        text1: 'Please add quatity',
-      });
-    }
+
+    this.props.addThisToCart(data, authKey);
   };
 
   render() {
@@ -100,7 +91,7 @@ class ProductDetail extends React.Component {
             <TouchableOpacity
               style={[styles.incrementStyle, {flex: 1}]}
               onPress={() => {
-                if (this.state.quantity > 0) {
+                if (this.state.quantity > 1) {
                   this.setState({quantity: this.state.quantity - 1});
                 }
               }}>
