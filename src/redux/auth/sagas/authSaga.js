@@ -35,7 +35,7 @@ export function* workerViewOrdersAsync(action) {
     }
   } catch (e) {
     Toast.show({
-      text1: e.response.data.message,
+      text1: e.response,
     });
     console.log('error in getting order list..', e.response);
   }
@@ -57,9 +57,14 @@ export function* workerPlaceOrderAsync(action) {
     });
     if (response.status === 200) {
       console.log('response for added address..', response);
+      // yield put({
+      //   type: types.PRODUCTS_ORDERED,
+      //   payload: action.productsOrdered,
+      // });
       Toast.show({
         text1: response.message,
       });
+
       action.refresh();
 
       // setTimeout(() => action.navigation.navigate('ShippingAddresses'), 1500);

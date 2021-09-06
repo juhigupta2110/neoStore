@@ -8,6 +8,12 @@ const loginReducer = (state = initialState, action) => {
         token: action.payload.token,
       };
 
+    case types.LOGOUT:
+      return {
+        name: '',
+        token: '',
+      };
+
     case types.ERROR:
       return state;
 

@@ -10,6 +10,7 @@ import {Avatar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {Colors} from '../assets/styles/colors';
+import * as authActions from '../redux/auth/actions/authActions';
 
 class DrawableContent extends React.Component {
   constructor(props) {
@@ -21,15 +22,63 @@ class DrawableContent extends React.Component {
       <View style={styles.mainViewStyle}>
         {console.log('logger name is ...', this.props.loggerName.name)}
         {this.props.loggerName.name.length > 0 ? (
-          <View style={styles.userStyle}>
-            <Avatar.Image
-              size={hp('8%')}
-              source={require('../assets/images/user.png')}
-            />
-            <View style={styles.welcomeUserStyle}>
-              <Text style={styles.welcomeTextStyle}>Welcome!!</Text>
-              <Text style={styles.userNameTextStyle}>
-                {this.props.loggerName.name}
+          <View>
+            <View style={styles.userStyle}>
+              <Avatar.Image
+                size={hp('8%')}
+                source={require('../assets/images/user.png')}
+              />
+
+              <View style={styles.welcomeUserStyle}>
+                <Text style={styles.welcomeTextStyle}>Welcome!!</Text>
+                <Text style={styles.userNameTextStyle}>
+                  {this.props.loggerName.name}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('AllProducts')}>
+                Home
+              </Text>
+            </View>
+
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('AllProducts')}>
+                My Account
+              </Text>
+            </View>
+
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('Cart')}>
+                My Cart
+              </Text>
+            </View>
+
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('ViewOrder')}>
+                My Orders
+              </Text>
+            </View>
+
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => {
+                  this.props.logout();
+                  // setTimeout(() => {
+                  this.props.navigation.navigate('AllProducts');
+                  // }, 500);
+                }}>
+                Logout
               </Text>
             </View>
           </View>
@@ -70,7 +119,15 @@ const mapStateToProps = (state) => ({
   loggerName: state.loginReducer,
 });
 
-export default connect(mapStateToProps)(DrawableContent);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch(authActions.logout());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawableContent);
 
 const styles = StyleSheet.create({
   mainViewStyle: {
@@ -100,6 +157,7 @@ const styles = StyleSheet.create({
   userStyle: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: hp('5%'),
   },
   welcomeUserStyle: {
     alignItems: 'center',

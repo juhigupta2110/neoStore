@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import * as React from 'react';
 
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
@@ -12,47 +12,32 @@ import * as authActions from '../../redux/auth/actions/authActions';
 import {Colors} from '../../assets/styles/colors';
 import RenderAddressItem from '../../components/renderAddressItem';
 import RenderOrderItem from '../../components/renderOrderItem';
+import RenderOrderItemProduct from '../../components/renderOrderItemProduct';
+import {ImATeapot} from 'http-errors';
 
-export default function ViewOrder(props) {
-  const dispatch = useDispatch();
-
-  //const addresses = useSelector((state) => state.getAddressReducer);
-  const authKey = useSelector((state) => state.loginReducer.token);
-
-  useEffect(() => {
-    dispatch(authActions.viewOrdersAsync(authKey));
-  }, [dispatch]);
-
-  const orders = useSelector((state) => state.allOrdersReducer);
-
-  console.log('orders coming in...', orders);
-
-  //   const handleAddAddress = () => {
-  //     props.navigation.navigate('AddAddress');
-  //   };
-
+const ViewOrderProducts = (props) => {
+  console.log(
+    'props coming in viewOrderProducts...',
+    props.route.params.products,
+  );
   return (
     <View style={styles.flatlistStyle}>
       <FlatList
-        data={orders}
+        data={props.route.params.products}
         keyExtractor={(item) => item.id}
         renderItem={({item}) => (
-          <RenderOrderItem
-            id={item.id}
-            products={item.items}
-            orderDate={item.createdAt.slice(0, 10)}
-            {...props}
+          <RenderOrderItemProduct
+            quantity={item.quantity}
+            img={item.productId.mainImage}
+            name={item.productId.name}
+            price={item.productId.price}
           />
         )}
       />
-      {/* <TouchableOpacity
-        style={styles.addAddressViewStyle}
-        onPress={() => handleAddAddress()}>
-        <Text style={styles.addAddressTextStyle}>Add Another Address</Text>
-      </TouchableOpacity> */}
     </View>
   );
-}
+};
+export default ViewOrderProducts;
 
 const styles = StyleSheet.create({
   addAddressViewStyle: {

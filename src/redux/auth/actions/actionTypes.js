@@ -5,6 +5,7 @@ export const ERROR = 'ERROR';
 
 export const LOGIN = 'LOGIN';
 export const LOGIN_ASYNC = 'LOGIN_ASYNC';
+export const LOGOUT = 'LOGOUT';
 
 // FOR REGISTER
 
@@ -50,3 +51,4 @@ export const EDIT_ADDRESS_ASYNC = 'EDIT_ADDRESS_ASYNC';
 export const PLACE_ORDER_ASYNC = 'PLACE_ORDER_ASYNC';
 export const VIEW_ORDERS_ASYNC = 'VIEW_ORDERS_ASYNC';
 export const VIEW_ORDERS = 'VIEW_ORDERS';
+export const PRODUCTS_ORDERED = 'PRODUCTS_ORDERED';

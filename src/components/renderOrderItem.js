@@ -22,61 +22,36 @@ import {Colors} from '../assets/styles/colors';
 class RenderOrderItems extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props coming in here...', this.props);
   }
 
-  editAddress = () => {
-    // let pin = this.props.pincode;
-    // let strPincode = pin.toString();
-    // this.props.navigation.navigate('EditAddress', {
-    //   addressLine: this.props.addressLine,
-    //   city: this.props.city,
-    //   pincode: strPincode,
-    //   state: this.props.state,
-    //   country: this.props.country,
-    //   id: this.props.id,
-    // });
+  onClick = () => {
+    this.props.navigation.navigate('ViewOrderProducts', {
+      products: this.props.products,
+    });
   };
-
-  deleteAddress = () => {
-    // let authKey = this.props.logger.token;
-    // this.props.deleteAddress(authKey, this.props.id, this.refresh);
-  };
-
-  //   refresh = () => {
-  //     let authKey = this.props.logger.token;
-  //     this.props.getAddress(authKey);
-  //   };
-
-  //   onSelectingAddress = () => {
-  //     let pin = this.props.pincode;
-  //     let strPincode = pin.toString();
-
-  //     this.props.navigation.navigate('PlaceOrder', {
-  //       addressLine: this.props.addressLine,
-  //       city: this.props.city,
-  //       pincode: strPincode,
-  //       state: this.props.state,
-  //       country: this.props.country,
-  //       id: this.props.id,
-  //     });
-  //   };
 
   render() {
     return (
       <View style={styles.topMainCompStyle}>
         <View style={styles.mainCompStyle}>
-          <View style={{marginBottom: 5}}>
+          <TouchableOpacity
+            style={{marginBottom: 5}}
+            onPress={() => this.onClick()}>
             <Text style={{fontWeight: 'bold', fontSize: 18}}>
               ORDER ID--{this.props.id}
             </Text>
+            <Text style={{fontWeight: 'bold', fontSize: 18}}>
+              ORDER Date--{this.props.orderDate}
+            </Text>
 
-            <FlatList
+            {/* <FlatList
               data={this.props.items}
               renderItem={({item}) => <RenderOrderItemProduct />}
               keyExtractor={(item) => item._id}
-            />
-          </View>
-          <View style={styles.iconViewStyle}>
+            /> */}
+          </TouchableOpacity>
+          {/* <View style={styles.iconViewStyle}>
             <Icon
               name="trash-outline"
               size={22}
@@ -87,7 +62,7 @@ class RenderOrderItems extends React.Component {
               size={22}
               onPress={() => this.editAddress()}
             />
-          </View>
+          </View> */}
         </View>
       </View>
     );

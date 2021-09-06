@@ -171,7 +171,7 @@ const mapDispatchToProps = (dispatch) => {
     getAddresses: (authKey) => {
       dispatch(authActions.getAddressAsync(authKey));
     },
-    placeOrderNow: (authKey, data, refresh) => {
+    placeOrderNow: (authKey, data, refresh, productsOrdered) => {
       dispatch(authActions.placeOrderAsync(authKey, data, refresh));
     },
   };

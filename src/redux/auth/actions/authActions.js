@@ -6,6 +6,12 @@ export const login = () => {
   };
 };
 
+export const logout = () => {
+  return {
+    type: types.LOGOUT,
+  };
+};
+
 export const allProducts = () => {
   return {
     type: types.ALL_PRODUCTS,
@@ -148,5 +154,12 @@ export const viewOrdersAsync = (authKey) => {
   return {
     type: types.VIEW_ORDERS_ASYNC,
     authKey,
+  };
+};
+
+export const productsOrdered = (data) => {
+  return {
+    type: types.PRODUCTS_ORDERED,
+    payload: data,
   };
 };

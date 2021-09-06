@@ -47,7 +47,11 @@ class Cart extends React.Component {
   render() {
     return (
       <View>
-        {this.props.cartItems.products ? (
+        {console.log(
+          'product details coming in cart...',
+          this.props.cartItems.products,
+        )}
+        {!this.props.cartItems.products ? (
           <Modal transparent={true} visible={true}>
             <View style={styles.modalViewStyle}>
               <Text style={styles.modalTextStyle}>No items in cart...</Text>
