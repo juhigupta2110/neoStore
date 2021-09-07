@@ -14,6 +14,35 @@ function onResponseRegister(res) {
 
 //WORKER SAGA
 
+export function* workerChangePasswordAsync(action) {
+  try {
+    const response = yield call(async () => {
+      const result = await axios.post(
+        'https://neostore-api.herokuapp.com/api/user/change-password',
+        action.payload,
+        {
+          headers: {
+            Authorization: action.authKey,
+          },
+        },
+      );
+      return result;
+    });
+    if (response.status === 200) {
+      console.log('response for change password..', response);
+
+      Toast.show({
+        text1: response.data.message,
+      });
+    }
+  } catch (e) {
+    Toast.show({
+      text1: e.response.data.message,
+    });
+    console.log('error in change password..', e.response);
+  }
+}
+
 export function* workerViewOrdersAsync(action) {
   try {
     const response = yield call(async () => {
@@ -469,6 +498,10 @@ export function* watchViewOrdersAsync() {
   yield takeEvery(types.VIEW_ORDERS_ASYNC, workerViewOrdersAsync);
 }
 
+export function* watchChangePasswordAsync() {
+  yield takeEvery(types.CHANGE_PASSWORD_ASYNC, workerChangePasswordAsync);
+}
+
 // COMBINING SAGAS
 export function* rootSaga() {
   yield all([
@@ -487,5 +520,6 @@ export function* rootSaga() {
     watchEditAddressAsync(),
     watchPlaceOrderAysnc(),
     watchViewOrdersAsync(),
+    watchChangePasswordAsync(),
   ]);
 }

@@ -30,11 +30,11 @@ const Header = (props) => {
         </View>
         <View style={styles.rightViewStyle}>
           <Icons name="cart-outline" size={30} onPress={() => clickHandler()} />
-          <Icons
+          {/* <Icons
             name="md-person-outline"
             size={28}
             onPress={() => props.navigation.navigate('CreateAccount')}
-          />
+          /> */}
         </View>
       </View>
 
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   rightViewStyle: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   searchViewStyle: {
     justifyContent: 'center',

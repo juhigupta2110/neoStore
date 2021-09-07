@@ -7,6 +7,8 @@ import {
   StyleSheet,
   TextInput,
   Picker,
+  Modal,
+  Pressable,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -31,6 +33,8 @@ class Login extends React.Component {
       selectedValue: 'java',
       emailValidate: true,
       eye: false,
+      modalVisible: false,
+      forgotPasswordEmail: '',
     };
   }
 
@@ -68,9 +72,44 @@ class Login extends React.Component {
     });
   };
 
+  setModalVisible = (visible) => {
+    this.setState({modalVisible: visible});
+  };
+
+  forgotPassword = () => {
+    this.setState({
+      modalVisible: true,
+    });
+  };
+
   render() {
     return (
       <View style={styles.mainViewStyle}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            this.setState(!this.state.modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Enter your email :</Text>
+              <TextInput
+                style={styles.forgotPasswordInputStyle}
+                placeholder="enter your email"
+                onChange={(text) => this.setState({forgotPasswordEmail: text})}
+              />
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                <Text style={styles.textStyle}>submit</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
         <Text style={styles.helloTextStyle}>Hello there!</Text>
         <Text style={styles.createAccountStyle}>Login to your Account</Text>
         <View>
@@ -132,7 +171,7 @@ class Login extends React.Component {
           </TouchableOpacity>
 
           <View style={styles.forgetPasswordView}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.forgotPassword()}>
               <Text style={styles.forgetPasswordText}>Forgot passoword?</Text>
             </TouchableOpacity>
             <Text>or</Text>
@@ -228,4 +267,51 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.GREY,
   },
   eyeIconStyle: {},
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  forgotPasswordInputStyle: {
+    width: 200,
+    height: 50,
+    fontSize: 18,
+  },
 });

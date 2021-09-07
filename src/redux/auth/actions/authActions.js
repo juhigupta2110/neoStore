@@ -163,3 +163,11 @@ export const productsOrdered = (data) => {
     payload: data,
   };
 };
+
+export const changePasswordAsync = (data, authKey) => {
+  return {
+    type: types.CHANGE_PASSWORD_ASYNC,
+    payload: data,
+    authKey,
+  };
+};

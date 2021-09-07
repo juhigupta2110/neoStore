@@ -10,6 +10,7 @@ import {
   Picker,
   Modal,
   Button,
+  Pressable,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -51,8 +52,24 @@ class AllProducts extends React.Component {
       sortedList: [],
       reRender: '',
       dataInCompDidUpdate: '',
+      logoutModal: false,
+      logout: false,
     };
   }
+
+  componentDidMount() {
+    try {
+      this.setState({logout: this.props.route.params.logoutRequest});
+      console.log('inside try');
+      console.log(
+        'value comeing params...',
+        this.props.route.params.logoutRequest,
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   myFunction = () => {
     this.setState({
       updatedList: this.props.data,
@@ -174,6 +191,13 @@ class AllProducts extends React.Component {
     );
   };
 
+  setModalVisible = (logout) => {
+    this.setState({logoutModal: false, logout: logout});
+    if (logout) {
+      this.props.logout();
+    }
+  };
+
   render() {
     var CATEGORY = [...this.props.categories];
     var COLORS = [...this.props.allColors];
@@ -186,6 +210,32 @@ class AllProducts extends React.Component {
 
     return (
       <View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.logoutModal}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            this.setState(!this.state.logoutModal);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>you wish to logout?</Text>
+
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => this.setModalVisible(true)}>
+                <Text style={styles.textStyle}>yes</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => this.setModalVisible(false)}>
+                <Text style={styles.textStyle}>no</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+
         <Modal transparent={true} visible={this.state.showFiterModal}>
           <View style={{backgroundColor: '#000000aa', flex: 1}}>
             <View style={styles.headingViewStyle}>
@@ -358,6 +408,9 @@ const mapDispatchToProps = (dispatch) => {
     getAllColor: () => {
       dispatch(authActions.getColor());
     },
+    logout: () => {
+      dispatch(authActions.logout());
+    },
   };
 };
 
@@ -424,5 +477,7 @@ const styles = StyleSheet.create({
     width: wp('60%'),
     height: hp('25%'),
     marginRight: 10,
+    alignSelf: 'center',
+    marginTop: hp('20%'),
   },
 });

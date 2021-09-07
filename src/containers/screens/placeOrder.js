@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  Pressable,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
@@ -35,7 +36,7 @@ class PlaceOrder extends React.Component {
       state: this.props.route.params.state,
       country: this.props.route.params.country,
       id: this.props.route.params.id,
-      showFiterModal: false,
+      modalVisible: false,
     };
   }
   myFunction = () => {
@@ -61,8 +62,10 @@ class PlaceOrder extends React.Component {
     console.log('inside place order refresh...');
 
     this.setState({
-      showFiterModal: true,
+      modalVisible: true,
     });
+
+    setTimeout(() => this.setState({modalVisible: false}), 500);
 
     setTimeout(() => this.props.navigation.navigate('AllProducts'), 3000);
 
@@ -88,11 +91,31 @@ class PlaceOrder extends React.Component {
   render() {
     return (
       <View>
-        <Modal transparent={true} visible={this.state.showFiterModal}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            this.setState(!this.state.modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Order Placed !!!</Text>
+
+              {/* <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                <Text style={styles.textStyle}>ok</Text>
+              </Pressable> */}
+            </View>
+          </View>
+        </Modal>
+        {/* <Modal transparent={true} visible={this.state.showFiterModal}>
           <View style={styles.modalViewStyle}>
             <Text style={styles.modalTextStyle}>Order Placed !!!</Text>
           </View>
-        </Modal>
+        </Modal> */}
         {this.props.route.params.addressLine === '' ? null : (
           <View style={styles.topMainCompStyle}>
             <View style={styles.mainCompStyle}>
@@ -298,5 +321,48 @@ const styles = StyleSheet.create({
     marginLeft: 240,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 18,
+    color: Colors.GREEN,
   },
 });

@@ -80,9 +80,16 @@ class RenderProduct extends React.Component {
             //selectedStar={(rating) => this.onStarRatingPress(rating)}
           />
 
-          <View style={styles.addToCartViewStyle}>
+          <TouchableOpacity
+            style={styles.addToCartViewStyle}
+            onPress={() =>
+              this.props.navigation.navigate('ProductDetail', {
+                ...this.props,
+                subs: this.state.subs,
+              })
+            }>
             <Text style={styles.addToCartTextStyle}>Add To Cart</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );

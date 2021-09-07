@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  Image,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
@@ -52,11 +53,10 @@ class Cart extends React.Component {
           this.props.cartItems.products,
         )}
         {!this.props.cartItems.products ? (
-          <Modal transparent={true} visible={true}>
-            <View style={styles.modalViewStyle}>
-              <Text style={styles.modalTextStyle}>No items in cart...</Text>
-            </View>
-          </Modal>
+          <Image
+            source={require('../../assets/images/no_data_available.png')}
+            style={styles.imgStyle}
+          />
         ) : (
           <View>
             <FlatList
@@ -173,5 +173,12 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: Colors.WHITE,
     fontWeight: 'bold',
+  },
+  imgStyle: {
+    width: wp('60%'),
+    height: hp('25%'),
+    marginRight: 10,
+    alignSelf: 'center',
+    marginTop: hp('20%'),
   },
 });

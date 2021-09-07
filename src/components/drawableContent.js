@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Modal, Pressable, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {Avatar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,12 +15,24 @@ import * as authActions from '../redux/auth/actions/authActions';
 class DrawableContent extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      logout: false,
+    };
   }
+
+  onClick = () => {
+    if (this.state.logout === true) {
+      this.props.logout();
+      this.props.navigation.navigate('AllProducts');
+    } else {
+      this.props.navigation.navigate('AllProducts');
+    }
+  };
 
   render() {
     return (
       <View style={styles.mainViewStyle}>
-        {console.log('logger name is ...', this.props.loggerName.name)}
         {this.props.loggerName.name.length > 0 ? (
           <View>
             <View style={styles.userStyle}>
@@ -48,7 +60,7 @@ class DrawableContent extends React.Component {
             <View style={styles.drawerItemStyle}>
               <Text
                 style={styles.textStyle}
-                onPress={() => this.props.navigation.navigate('AllProducts')}>
+                onPress={() => this.props.navigation.navigate('MyAccount')}>
                 My Account
               </Text>
             </View>
@@ -72,12 +84,29 @@ class DrawableContent extends React.Component {
             <View style={styles.drawerItemStyle}>
               <Text
                 style={styles.textStyle}
-                onPress={() => {
-                  this.props.logout();
-                  // setTimeout(() => {
-                  this.props.navigation.navigate('AllProducts');
-                  // }, 500);
-                }}>
+                onPress={
+                  () => {
+                    Alert.alert('Do you wish to logout?', '', [
+                      {
+                        text: 'Cancel',
+                        onPress: () => {
+                          this.setState({logout: false});
+                          this.onClick();
+                        },
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'OK',
+                        onPress: () => {
+                          this.setState({logout: true});
+                          this.onClick();
+                        },
+                      },
+                    ]);
+                  }
+                  //alert('clicked on logout');
+                  // this.props.navigation.navigate('AllProducts');
+                }>
                 Logout
               </Text>
             </View>
@@ -97,7 +126,7 @@ class DrawableContent extends React.Component {
             <View style={styles.drawerItemStyle}>
               <Text
                 style={styles.textStyle}
-                onPress={() => this.props.navigation.navigate('Login')}>
+                onPress={() => this.props.navigation.navigate('CreateAccount')}>
                 Login
               </Text>
             </View>
@@ -170,5 +199,11 @@ const styles = StyleSheet.create({
   userNameTextStyle: {
     fontSize: 24,
     color: Colors.BLACK,
+  },
+  modalViewStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
   },
 });
