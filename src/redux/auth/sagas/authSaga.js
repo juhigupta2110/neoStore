@@ -33,11 +33,15 @@ export function* workerChangePasswordAsync(action) {
 
       Toast.show({
         text1: response.data.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
     }
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in change password..', e.response);
   }
@@ -65,6 +69,8 @@ export function* workerViewOrdersAsync(action) {
   } catch (e) {
     Toast.show({
       text1: e.response,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in getting order list..', e.response);
   }
@@ -92,6 +98,8 @@ export function* workerPlaceOrderAsync(action) {
       // });
       Toast.show({
         text1: response.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
 
       action.refresh();
@@ -101,6 +109,8 @@ export function* workerPlaceOrderAsync(action) {
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in add address..', e.response);
   }
@@ -124,6 +134,8 @@ export function* workerEditAddressAsync(action) {
       console.log('response for update address..', response);
       Toast.show({
         text1: response.data.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
       action.refresh();
       action.navigation.navigate('ShippingAddresses');
@@ -131,6 +143,8 @@ export function* workerEditAddressAsync(action) {
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in update address..', e.response.data.message);
   }
@@ -154,12 +168,16 @@ export function* workerDeleteAddressAsync(action) {
       console.log('response for delete address..', response);
       Toast.show({
         text1: response.data.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
       action.refresh();
     }
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in delete address..', e.response);
   }
@@ -183,6 +201,8 @@ export function* workerAddAddressAsync(action) {
       console.log('response for added address..', response);
       Toast.show({
         text1: response.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
       action.refresh();
 
@@ -191,6 +211,8 @@ export function* workerAddAddressAsync(action) {
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in add address..', e.response);
   }
@@ -221,6 +243,8 @@ export function* workerGetAdressesAsync(action) {
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in getting address list..', e.response);
   }
@@ -244,12 +268,16 @@ export function* workerDeleteProductFromCartAsync(action) {
       console.log('response for delete from cart..', response);
       Toast.show({
         text1: response.data.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
       action.refreshCart();
     }
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in delete from cart..', e.response);
   }
@@ -273,12 +301,16 @@ export function* workerUpdateQuatityAsync(action) {
       console.log('response for update cart..', response);
       Toast.show({
         text1: response.data.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
       action.refreshCart();
     }
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in increaseing quantity..', e.response.data.message);
   }
@@ -306,6 +338,8 @@ export function* workerGetCartAsync(action) {
   } catch (e) {
     Toast.show({
       text1: e.response,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in getting from cart...', e.response);
   }
@@ -329,12 +363,16 @@ export function* workerAddToCartAsync(action) {
       console.log('response from additn to cart', response);
       Toast.show({
         text1: response.data.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
       // yield put({type: types.ADD_T0_CART});
     }
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error in adding to cart...', e.response.data.message);
   }
@@ -408,6 +446,8 @@ export function* workerLoginAsyncTesting(action) {
     if (response.status == 200) {
       Toast.show({
         text1: response.data.message,
+        visibilityTime: 500,
+        position: 'bottom',
       });
       yield put({
         type: types.LOGIN,
@@ -422,6 +462,8 @@ export function* workerLoginAsyncTesting(action) {
   } catch (e) {
     Toast.show({
       text1: e.response.data.message,
+      visibilityTime: 500,
+      position: 'bottom',
     });
     console.log('error is...', e.response);
   }

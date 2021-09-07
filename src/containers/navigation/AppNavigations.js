@@ -19,6 +19,7 @@ import EditProfile from '../screens/editProfile';
 import AddAddress from '../screens/addAddress';
 import EditAddress from '../screens/editAddress';
 import myAccount from '../screens/myAccount';
+import StoreLocator from '../screens/storeLocator';
 import Header from '../../components/header';
 import PlainHeader from '../../components/plainHeader';
 import CreateAccount from '../screens/createAccount';
@@ -109,6 +110,11 @@ const StackNavigations = () => {
       <Stack.Screen
         name="ResetPassword"
         component={ResetPassword}
+        options={{header: (props) => <PlainHeader {...props} />}}
+      />
+      <Stack.Screen
+        name="StoreLocator"
+        component={StoreLocator}
         options={{header: (props) => <PlainHeader {...props} />}}
       />
     </Stack.Navigator>

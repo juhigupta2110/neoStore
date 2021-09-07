@@ -42,6 +42,8 @@ class EditProfile extends React.Component {
   showToastMsg = (msg) => {
     Toast.show({
       text1: 'Profile updated',
+      visibilityTime: 800,
+      position: 'bottom',
     });
   };
 

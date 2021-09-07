@@ -84,6 +84,14 @@ class DrawableContent extends React.Component {
             <View style={styles.drawerItemStyle}>
               <Text
                 style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('StoreLocator')}>
+                Store Locator
+              </Text>
+            </View>
+
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
                 onPress={
                   () => {
                     Alert.alert('Do you wish to logout?', '', [

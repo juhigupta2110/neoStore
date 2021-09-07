@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import StarRating from 'react-native-star-rating';
 import {connect} from 'react-redux';
 import Toast, {BaseToast} from 'react-native-toast-message';
+import Share from 'react-native-share';
 
 import {Colors} from '../../assets/styles/colors';
 import * as authActions from '../../redux/auth/actions/authActions';
@@ -31,6 +32,19 @@ class ProductDetail extends React.Component {
     this.props.addThisToCart(data, authKey);
   };
 
+  myCustomeShare = async () => {
+    const shareOptions = {
+      message: this.props.route.params.productName,
+    };
+
+    try {
+      const shareResponse = await Share.open(shareOptions);
+      console.log(JSON.stringify(shareResponse));
+    } catch (e) {
+      console.log('error in share', e);
+    }
+  };
+
   render() {
     return (
       <View style={styles.mainCompStyle}>
@@ -41,6 +55,11 @@ class ProductDetail extends React.Component {
             }}
             style={styles.imgStyle}
           />
+          <TouchableOpacity
+            onPress={this.myCustomeShare}
+            style={styles.shareViewStyle}>
+            <Icon name="share-outline" size={35} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.contentStyle}>
@@ -241,5 +260,11 @@ const styles = StyleSheet.create({
   addToCartButtonTextStyle: {
     fontSize: 18,
     color: Colors.WHITE,
+  },
+  shareViewStyle: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    width: wp('85%'),
+    marginTop: hp('1%'),
   },
 });

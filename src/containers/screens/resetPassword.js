@@ -55,6 +55,8 @@ class ResetPassword extends React.Component {
     } else {
       Toast.show({
         text1: 'enter valid credentials',
+        visibilityTime: 800,
+        position: 'bottom',
       });
     }
   };

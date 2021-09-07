@@ -69,6 +69,8 @@ class Login extends React.Component {
   showToastMsg = (msg) => {
     Toast.show({
       text1: msg,
+      visibilityTime: 800,
+      position: 'bottom',
     });
   };
 

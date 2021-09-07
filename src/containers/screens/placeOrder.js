@@ -77,6 +77,8 @@ class PlaceOrder extends React.Component {
     if (this.props.route.params.id === '') {
       Toast.show({
         text1: 'Please select an address',
+        visibilityTime: 800,
+        position: 'bottom',
       });
     } else {
       let data = {
