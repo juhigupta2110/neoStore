@@ -7,24 +7,60 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import FileViewer from 'react-native-file-viewer';
 
 import * as authActions from '../../redux/auth/actions/authActions';
 import {Colors} from '../../assets/styles/colors';
 import RenderAddressItem from '../../components/renderAddressItem';
 import RenderOrderItem from '../../components/renderOrderItem';
 import RenderOrderItemProduct from '../../components/renderOrderItemProduct';
-import {ImATeapot} from 'http-errors';
+
+const htmlContent = (
+  <html>
+    <body>
+      <h1>NeoStore Invoice</h1>
+    </body>
+  </html>
+);
 
 const ViewOrderProducts = (props) => {
-  console.log(
-    'props coming in viewOrderProducts...',
-    props.route.params.products,
-  );
+  const createPDF = async () => {
+    let options = {
+      html: `htmlContent`,
+      fileName: 'test2',
+      directory: 'Documents',
+    };
+
+    let file = await RNHTMLtoPDF.convert(options);
+    console.log(file);
+
+    try {
+      const resp = FileViewer.open(file.filePath);
+      console.log('resp from file viewer', resp);
+    } catch (e) {
+      console.log('error in fileView..', e);
+    }
+
+    // FileViewer.open(file.filePath)
+    //   .then((data) => {
+    //     console.log('FileView Data: ', data);
+    //   })
+    //   .catch((error) => {
+    //     console.log('FileView Error: ', error);
+    //     // alert(`File save to your local storage but, ${error}`);
+    //   });
+  };
+
   return (
     <View style={styles.flatlistStyle}>
+      <TouchableOpacity onPress={createPDF}>
+        <Text>Create PDF</Text>
+      </TouchableOpacity>
+
       <FlatList
         data={props.route.params.products}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.productId.id}
         renderItem={({item}) => (
           <RenderOrderItemProduct
             quantity={item.quantity}
@@ -34,6 +70,9 @@ const ViewOrderProducts = (props) => {
           />
         )}
       />
+      <TouchableOpacity style={styles.placeOrderStyle} onPress={createPDF}>
+        <Text style={styles.placeOrderText}>Download Invoice</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -55,6 +94,26 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
   },
   flatlistStyle: {
+    flex: 1,
     height: hp('85%'),
+  },
+  pdf: {
+    flex: 1,
+    width: wp('80%'),
+    height: hp('70%'),
+  },
+  placeOrderStyle: {
+    width: wp('60%'),
+    height: hp('5%'),
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: Colors.ORANGE,
+    marginBottom: hp('5%'),
+    borderRadius: 5,
+  },
+  placeOrderText: {
+    fontSize: 18,
+    color: Colors.WHITE,
   },
 });
