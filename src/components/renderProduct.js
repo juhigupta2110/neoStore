@@ -107,8 +107,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.HeaderColor5,
   },
   mainCompStyle: {
-    width: wp('95%'),
-    height: hp('40%'),
+    flex: 1,
+    // width: wp('95%'),
+    // height: hp('50%'),
     borderWidth: 0.5,
     borderColor: Colors.GreyBorder,
     shadowRadius: 1,

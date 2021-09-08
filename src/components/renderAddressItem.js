@@ -60,7 +60,7 @@ class RenderAddressItems extends React.Component {
       <View style={styles.topMainCompStyle}>
         <View style={styles.mainCompStyle}>
           <TouchableOpacity
-            style={{marginBottom: 5}}
+            style={{marginBottom: hp('2%')}}
             onPress={() => this.onSelectingAddress()}>
             <Text style={{fontWeight: 'bold', fontSize: 18}}>
               {this.props.addressLine}--{this.props.city}
@@ -127,18 +127,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  imgStyle: {
-    width: 80,
-    height: 90,
-    backgroundColor: '#c6c2c2',
-    borderRadius: 10,
-    marginRight: 10,
-  },
 
-  contentStyle: {
-    width: 210,
-    marginLeft: 10,
-  },
   iconViewStyle: {
     justifyContent: 'space-between',
     width: wp('8%'),

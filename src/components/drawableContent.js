@@ -145,6 +145,13 @@ class DrawableContent extends React.Component {
                 All Products
               </Text>
             </View>
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('StoreLocator')}>
+                Store Locator
+              </Text>
+            </View>
           </View>
         )}
       </View>

@@ -16,18 +16,16 @@ import RenderAddressItem from '../../components/renderAddressItem';
 import RenderOrderItem from '../../components/renderOrderItem';
 import RenderOrderItemProduct from '../../components/renderOrderItemProduct';
 
-const htmlContent = (
-  <html>
+const htmlContent = `<html>
     <body>
       <h1>NeoStore Invoice</h1>
     </body>
-  </html>
-);
+  </html>`;
 
 const ViewOrderProducts = (props) => {
   const createPDF = async () => {
     let options = {
-      html: `htmlContent`,
+      html: htmlContent,
       fileName: 'test2',
       directory: 'Documents',
     };
@@ -41,23 +39,10 @@ const ViewOrderProducts = (props) => {
     } catch (e) {
       console.log('error in fileView..', e);
     }
-
-    // FileViewer.open(file.filePath)
-    //   .then((data) => {
-    //     console.log('FileView Data: ', data);
-    //   })
-    //   .catch((error) => {
-    //     console.log('FileView Error: ', error);
-    //     // alert(`File save to your local storage but, ${error}`);
-    //   });
   };
 
   return (
     <View style={styles.flatlistStyle}>
-      <TouchableOpacity onPress={createPDF}>
-        <Text>Create PDF</Text>
-      </TouchableOpacity>
-
       <FlatList
         data={props.route.params.products}
         keyExtractor={(item) => item.productId.id}

@@ -11,6 +11,8 @@ import {
   Modal,
   Button,
   Pressable,
+  TextInput,
+  TouchableHighlightBase,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -35,6 +37,8 @@ class AllProducts extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log('props in all products...', this.props);
+
     this.state = {
       dataFetched: '',
       categoryFetched: '',
@@ -54,20 +58,10 @@ class AllProducts extends React.Component {
       dataInCompDidUpdate: '',
       logoutModal: false,
       logout: false,
+      searchItem: '',
+      searchClicked: false,
+      clearSearchClicked: false,
     };
-  }
-
-  componentDidMount() {
-    try {
-      this.setState({logout: this.props.route.params.logoutRequest});
-      console.log('inside try');
-      console.log(
-        'value comeing params...',
-        this.props.route.params.logoutRequest,
-      );
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   myFunction = () => {
@@ -92,6 +86,17 @@ class AllProducts extends React.Component {
     if (this.state.colorFetched === '') {
       this.props.getAllColor();
       this.setState({colorFetched: 'fetched'});
+    }
+
+    try {
+      this.setState({logout: this.props.route.params.logoutRequest});
+      console.log('inside try');
+      console.log(
+        'value comeing params...',
+        this.props.route.params.logoutRequest,
+      );
+    } catch (e) {
+      console.log(e);
     }
 
     // this.setState({updatedList: this.props.data});
@@ -186,9 +191,21 @@ class AllProducts extends React.Component {
 
   checkFilters = (item) => {
     return (
-      item.category.name == this.state.categorySelected ||
+      item.category.name == this.state.categorySelected &&
       item.color.name == this.state.colorSelected
     );
+  };
+
+  searchFilters = (item) => {
+    console.log('item searched...', item);
+    console.log('search word..', this.state.searchItem);
+    return item.name.includes(this.state.searchItem);
+  };
+
+  clearSearch = () => {
+    this.setState({
+      updatedList: this.props.data,
+    });
   };
 
   setModalVisible = (logout) => {
@@ -289,6 +306,38 @@ class AllProducts extends React.Component {
             </View>
           </View>
         </Modal>
+
+        <View style={styles.searchViewStyle}>
+          <TextInput
+            style={styles.searchStyle}
+            placeholder="Search NeoStore"
+            maxLength={30}
+            onChangeText={(text) => this.setState({searchItem: text})}
+          />
+
+          <Icon
+            name="search-outline"
+            size={30}
+            onPress={() => {
+              this.setState({searchClicked: true});
+              var DATA_search = this.state.updatedList.filter(
+                this.searchFilters,
+              );
+
+              this.setState({updatedList: DATA_search});
+            }}
+          />
+        </View>
+        {this.state.searchClicked === true ? (
+          <TouchableOpacity
+            onPress={() => {
+              this.setState({clearSearchClicked: true});
+              this.clearSearch();
+            }}>
+            <Text style={styles.ClearSearchTextStyle}>Clear Search</Text>
+          </TouchableOpacity>
+        ) : null}
+
         <View style={styles.filterSortViewStyle}>
           <TouchableOpacity style={styles.filterViewStyle}>
             <Text style={styles.fiterSortTextStyle}>Filter</Text>
@@ -443,6 +492,11 @@ const styles = StyleSheet.create({
     color: Colors.GREY,
     fontSize: 14,
   },
+  ClearSearchTextStyle: {
+    color: Colors.BLUE,
+    fontSize: 14,
+    marginLeft: wp('3%'),
+  },
   item: {
     backgroundColor: Colors.LIGHTGREY,
     paddingVertical: hp('0.7%'),
@@ -470,14 +524,34 @@ const styles = StyleSheet.create({
     marginBottom: hp('1%'),
   },
   filterButtonViewStyle: {
+    width: wp('60%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   imgStyle: {
     width: wp('60%'),
-    height: hp('25%'),
+    height: hp('30%'),
     marginRight: 10,
     alignSelf: 'center',
     marginTop: hp('20%'),
+  },
+  searchViewStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: Colors.DisabledButton,
+    width: wp('93%'),
+    height: hp('5.5%'),
+    borderRadius: 2,
+    marginLeft: wp('3%'),
+    marginVertical: hp('1%'),
+  },
+  searchStyle: {
+    width: wp('80%'),
+    height: hp('6.5%'),
+    paddingHorizontal: wp('2%'),
+    paddingTop: hp('2%'),
+    fontSize: 18,
+    //marginTop: hp('1%'),
   },
 });

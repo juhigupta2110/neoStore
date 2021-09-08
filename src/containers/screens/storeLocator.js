@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView from 'react-native-maps';
+import {PROVIDER_GOOGLE} from 'react-native-maps';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,

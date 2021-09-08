@@ -176,9 +176,10 @@ const styles = StyleSheet.create({
   },
   imgStyle: {
     width: wp('60%'),
-    height: hp('25%'),
+    height: hp('30%'),
     marginRight: 10,
     alignSelf: 'center',
+    justifyContent: 'center',
     marginTop: hp('20%'),
   },
 });

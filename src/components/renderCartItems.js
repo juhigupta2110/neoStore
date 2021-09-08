@@ -40,13 +40,10 @@ class RenderCartItems extends React.Component {
       data,
       this.refreshCart,
     );
-
-    //setTimeout(this.props.onChange, 3000);
   };
 
   refreshCart = () => {
     this.props.getCart(this.props.logger.token);
-    //setTimeout(this.props.refreshScreen(), 2000);
   };
 
   deleteProduct = () => {
@@ -71,7 +68,7 @@ class RenderCartItems extends React.Component {
           </View>
 
           <View style={styles.contentStyle}>
-            <View style={{marginBottom: 5}}>
+            <View style={{marginBottom: hp('2%')}}>
               <Text style={{fontWeight: 'bold', fontSize: 18}}>
                 {this.props.productName}--{this.props.id}
               </Text>
@@ -163,11 +160,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imgStyle: {
-    width: 80,
-    height: 90,
+    width: wp('20%'),
+    height: hp('15%'),
     backgroundColor: '#c6c2c2',
     borderRadius: 10,
-    marginRight: 10,
+    marginRight: wp('2%'),
   },
 
   contentStyle: {

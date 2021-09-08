@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     marginVertical: hp('1%'),
     width: wp('80%'),
-    height: hp('5%'),
+    height: hp('5.5%'),
     paddingLeft: wp('0.5%'),
     fontSize: 18,
   },
@@ -307,13 +307,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: hp('2%'),
     textAlign: 'center',
     fontSize: 18,
   },
   forgotPasswordInputStyle: {
-    width: 200,
-    height: 50,
+    width: wp('20%'),
+    height: hp('2%'),
     fontSize: 18,
   },
 });

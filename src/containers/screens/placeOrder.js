@@ -168,6 +168,7 @@ class PlaceOrder extends React.Component {
           )}
           keyExtractor={(item) => item.id}
         />
+
         <View style={styles.grandTotalViewStyle}>
           <Text style={styles.totalAmountTextStyle}>Total Amount: </Text>
           <Text style={styles.amountTextStyle}>
@@ -239,6 +240,7 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
   },
   flatlistStyle: {
+    //flex: 1,
     height: hp('55%'),
   },
   grandTotalViewStyle: {

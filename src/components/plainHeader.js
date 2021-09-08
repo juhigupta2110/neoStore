@@ -9,16 +9,25 @@ import Icon from 'react-native-vector-icons/Feather';
 import Icons from 'react-native-vector-icons/Ionicons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 import {Colors} from '../assets/styles/colors';
 import * as authActions from '../redux/auth/actions/authActions';
 
 const PlainHeader = (props) => {
   const clickHandler = () => {
-    props.getCart(props.logger.token);
-    props.navigation.navigate('Cart');
+    if (props.logger.token === '') {
+      Toast.show({
+        text1: 'Please login first',
+        visibilityTime: 800,
+        position: 'bottom',
+      });
+    } else {
+      props.getCart(props.logger.token);
+      props.navigation.navigate('Cart');
+    }
   };
-
+  console.log('props in plain header..', props);
   return (
     <View>
       <View style={styles.mainViewStyle}>
@@ -34,11 +43,6 @@ const PlainHeader = (props) => {
         </View>
         <View style={styles.rightViewStyle}>
           <Icons name="cart-outline" size={30} onPress={() => clickHandler()} />
-          <Icons
-            name="md-person-outline"
-            size={28}
-            onPress={() => props.navigation.navigate('CreateAccount')}
-          />
         </View>
       </View>
     </View>
@@ -63,10 +67,11 @@ const styles = StyleSheet.create({
   mainViewStyle: {
     backgroundColor: Colors.tabYellowColor,
     height: hp('10%'),
+    alignItems: 'center',
     justifyContent: 'space-evenly',
     flexDirection: 'row',
-    paddingHorizontal: wp('5%'),
-    paddingTop: hp('5%'),
+    paddingHorizontal: wp('2%'),
+    // paddingTop: hp('5%'),
   },
   leftViewStyle: {
     flex: 4,

@@ -120,12 +120,20 @@ class Register extends React.Component {
           />
           <TextInput
             style={styles.textInputStyle}
-            placeholder="Enter Email"
+            placeholder="Last name"
             autoCapitalize="none"
             maxLength={30}
             autoCorrect={false}
-            onEndEditing={(e) => this.handleValidEmail(e.nativeEvent.text)}
             onChangeText={(text) => this.setState({lastName: text})}
+          />
+
+          <TextInput
+            style={styles.textInputStyle}
+            placeholder="Email Address"
+            maxLength={25}
+            autoCapitalize="none"
+            onEndEditing={(e) => this.handleValidEmail(e.nativeEvent.text)}
+            onChangeText={(text) => this.setState({email: text})}
           />
           {this.state.emailValidate ? null : (
             <Animatable.View
@@ -136,13 +144,6 @@ class Register extends React.Component {
               <Text style={styles.errorFormInputStyle}>Invalid email</Text>
             </Animatable.View>
           )}
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Email Address"
-            maxLength={25}
-            autoCapitalize="none"
-            onChangeText={(text) => this.setState({email: text})}
-          />
           <TextInput
             style={styles.textInputStyle}
             placeholder="Password"
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     marginVertical: hp('1%'),
     width: wp('90%'),
-    height: hp('5%'),
+    height: hp('5.5%'),
     paddingLeft: wp('0.5%'),
     fontSize: 18,
     borderBottomWidth: 0.5,
