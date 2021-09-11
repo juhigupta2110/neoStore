@@ -7,6 +7,8 @@ import getCartReducer from './getCart';
 import getAddressReducer from './getAddress';
 import allOrdersReducer from './allOrders';
 import productsOrdered from './productsOrdered';
+import filteredCategory from './fiteredCategory';
+import filteredData from './filteredData';
 
 export default combineReducers({
   loginReducer,
@@ -17,4 +19,6 @@ export default combineReducers({
   getAddressReducer,
   allOrdersReducer,
   productsOrdered,
+  filteredCategory,
+  filteredData,
 });

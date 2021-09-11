@@ -43,7 +43,7 @@ class AllProducts extends React.Component {
       dataFetched: '',
       categoryFetched: '',
       colorFetched: '',
-      sortBy: '',
+      // sortBy: '',
       unSortedData: [],
       dataFromStore: [],
       selectedValue: 'select',
@@ -55,29 +55,56 @@ class AllProducts extends React.Component {
       updatedList: [],
       sortedList: [],
       reRender: '',
+      sortBy: 'sort',
       dataInCompDidUpdate: '',
       logoutModal: false,
       logout: false,
       searchItem: '',
       searchClicked: false,
-      clearSearchClicked: false,
+      // clearSearchClicked: false,
+      mounted: false,
+      inGDSFP: false,
     };
+
+    this.props.getProducts();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (
+      props.fiteredCat === '' &&
+      state.filterApplied === '' &&
+      state.searchClicked === false
+    ) {
+      return {
+        updatedList: props.data,
+        inGDSFP: true,
+      };
+    } else if (
+      props.fiteredCat !== '' &&
+      state.filterApplied === '' &&
+      state.searchClicked === false
+    ) {
+      console.log('inside else in inGD..');
+      return {
+        updatedList: props.getFilteredData,
+        inGDSFP: true,
+      };
+    }
   }
 
   myFunction = () => {
     this.setState({
-      updatedList: this.props.data,
+      updatedList:
+        this.props.fiteredCat === ''
+          ? this.props.data
+          : this.props.getFilteredData,
       dataFetched: 'fetched',
+      sortBy: 'sort by',
     });
+    // this.forceUpdate();
   };
 
   componentDidMount() {
-    this.props.getProducts();
-
-    //this.myFunction();
-
-    setTimeout(this.myFunction, 1500);
-
     if (this.state.categoryFetched === '') {
       this.props.getAllCategory();
       this.setState({categoryFetched: 'fetched'});
@@ -87,19 +114,6 @@ class AllProducts extends React.Component {
       this.props.getAllColor();
       this.setState({colorFetched: 'fetched'});
     }
-
-    try {
-      this.setState({logout: this.props.route.params.logoutRequest});
-      console.log('inside try');
-      console.log(
-        'value comeing params...',
-        this.props.route.params.logoutRequest,
-      );
-    } catch (e) {
-      console.log(e);
-    }
-
-    // this.setState({updatedList: this.props.data});
   }
 
   sortByPriceUp = () => {
@@ -134,6 +148,19 @@ class AllProducts extends React.Component {
       const data_1 = [...this.state.updatedList];
       data_1.sort(function (a, b) {
         return b.avgRating - a.avgRating;
+      });
+      this.setState({sortedList: data_1});
+    } else {
+      this.setState({sortBy: '', sortedList: []});
+    }
+  };
+
+  sortByStarDown = () => {
+    if (this.state.sortBy !== 'starDown') {
+      this.setState({sortBy: 'starDown'});
+      const data_1 = [...this.state.updatedList];
+      data_1.sort(function (a, b) {
+        return a.avgRating - b.avgRating;
       });
       this.setState({sortedList: data_1});
     } else {
@@ -190,10 +217,25 @@ class AllProducts extends React.Component {
   };
 
   checkFilters = (item) => {
-    return (
-      item.category.name == this.state.categorySelected &&
-      item.color.name == this.state.colorSelected
-    );
+    if (
+      this.state.categorySelected.length > 0 &&
+      this.state.colorSelected.length > 0
+    ) {
+      return (
+        item.category.name == this.state.categorySelected &&
+        item.color.name == this.state.colorSelected
+      );
+    } else if (
+      this.state.categorySelected.length === 0 &&
+      this.state.colorSelected.length > 0
+    ) {
+      return item.color.name == this.state.colorSelected;
+    } else if (
+      this.state.categorySelected.length > 0 &&
+      this.state.colorSelected.length === 0
+    ) {
+      return item.category.name == this.state.categorySelected;
+    } else return item;
   };
 
   searchFilters = (item) => {
@@ -215,7 +257,14 @@ class AllProducts extends React.Component {
     }
   };
 
+  selectedCategoryFromDashboard = () => {};
+
   render() {
+    console.log('ingdf...', this.state.inGDSFP);
+    setTimeout(
+      () => console.log('updatedList is...', this.state.updatedList),
+      1000,
+    );
     var CATEGORY = [...this.props.categories];
     var COLORS = [...this.props.allColors];
 
@@ -227,32 +276,6 @@ class AllProducts extends React.Component {
 
     return (
       <View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.logoutModal}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            this.setState(!this.state.logoutModal);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>you wish to logout?</Text>
-
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => this.setModalVisible(true)}>
-                <Text style={styles.textStyle}>yes</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => this.setModalVisible(false)}>
-                <Text style={styles.textStyle}>no</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-
         <Modal transparent={true} visible={this.state.showFiterModal}>
           <View style={{backgroundColor: '#000000aa', flex: 1}}>
             <View style={styles.headingViewStyle}>
@@ -279,15 +302,30 @@ class AllProducts extends React.Component {
                   title="Apply filter"
                   onPress={() => {
                     this.setState({
-                      showFiterModal: false,
                       filterApplied: 'yes',
                     });
+                    console.log(
+                      'category selected..',
+                      this.state.categorySelected,
+                    );
+                    console.log('color selected..', this.state.colorSelected);
 
                     var DATA_new = this.state.updatedList.filter(
                       this.checkFilters,
                     );
-
+                    console.log('DATA_new...', DATA_new);
                     this.setState({updatedList: DATA_new});
+
+                    setTimeout(() => {
+                      console.log(
+                        'updated list after funnel filter..',
+                        this.state.updatedList,
+                      );
+                      this.setState({
+                        showFiterModal: false,
+                        filterApplied: 'yes',
+                      });
+                    }, 500);
                   }}
                 />
                 <Button
@@ -298,7 +336,7 @@ class AllProducts extends React.Component {
                       colorSelected: '',
                       filterApplied: '',
                       showFiterModal: false,
-                      updatedList: this.props.data,
+                      // updatedList: this.props.data,
                     })
                   }
                 />
@@ -313,6 +351,7 @@ class AllProducts extends React.Component {
             placeholder="Search NeoStore"
             maxLength={30}
             onChangeText={(text) => this.setState({searchItem: text})}
+            value={this.state.searchItem}
           />
 
           <Icon
@@ -320,9 +359,7 @@ class AllProducts extends React.Component {
             size={30}
             onPress={() => {
               this.setState({searchClicked: true});
-              var DATA_search = this.state.updatedList.filter(
-                this.searchFilters,
-              );
+              var DATA_search = this.props.data.filter(this.searchFilters);
 
               this.setState({updatedList: DATA_search});
             }}
@@ -331,7 +368,7 @@ class AllProducts extends React.Component {
         {this.state.searchClicked === true ? (
           <TouchableOpacity
             onPress={() => {
-              this.setState({clearSearchClicked: true});
+              this.setState({searchClicked: false, searchItem: ''});
               this.clearSearch();
             }}>
             <Text style={styles.ClearSearchTextStyle}>Clear Search</Text>
@@ -345,16 +382,18 @@ class AllProducts extends React.Component {
               name="funnel-outline"
               size={28}
               color={Colors.GREY}
-              onPress={() =>
+              onPress={() => {
                 this.setState({
                   showFiterModal: true,
-                  categorySelected: '',
-                  colorSelected: '',
+                  // categorySelected: '',
+                  // colorSelected: '',
                   filterApplied: '',
 
-                  updatedList: this.props.data,
-                })
-              }
+                  // updatedList: this.props.data,
+                });
+
+                // this.props.FilteredData([]);
+              }}
             />
           </TouchableOpacity>
 
@@ -386,6 +425,8 @@ class AllProducts extends React.Component {
                 size={26}
                 onPress={() => this.sortByPriceDown()}
               />
+
+              <Icon name="arrow-up" size={10} style={styles.iconStyle} />
               <Icon
                 name="star-outline"
                 color={
@@ -394,22 +435,31 @@ class AllProducts extends React.Component {
                     : Colors.GREY
                 }
                 size={18}
-                style={styles.iconStyle}
                 onPress={() => this.sortByStar()}
+              />
+              <Icon name="arrow-down" size={10} style={styles.iconStyle} />
+              <Icon
+                name="star-outline"
+                color={
+                  this.state.sortBy == 'starDown'
+                    ? Colors.tabYellowColor
+                    : Colors.GREY
+                }
+                size={18}
+                onPress={() => this.sortByStarDown()}
               />
             </View>
           </View>
         </View>
 
         {this.state.sortedList.length === 0 &&
-        this.state.updatedList.length === 0 &&
-        this.state.dataFetched !== '' ? (
+        this.state.updatedList.length === 0 ? (
+          //&& this.state.dataFetched !== ''
           <Image
             source={require('../../assets/images/no_data_available.png')}
             style={styles.imgStyle}
           />
         ) : null}
-
         <FlatList
           data={
             this.state.sortedList.length > 0
@@ -427,6 +477,7 @@ class AllProducts extends React.Component {
               features={item.features}
               subImages={item.subImagesUrl}
               id={item.id}
+              sortBy={this.state.sortBy}
               {...this.props}
             />
           )}
@@ -441,6 +492,8 @@ const mapStateToProps = (state) => ({
   data: state.allProductsReducer,
   categories: state.allCategoryReducer,
   allColors: state.allColorReducer,
+  fiteredCat: state.filteredCategory,
+  getFilteredData: state.filteredData,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -459,6 +512,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     logout: () => {
       dispatch(authActions.logout());
+    },
+    FilteredData: (data) => {
+      dispatch(authActions.getFilteredData(data));
+    },
+    filterCategorySelected: (category) => {
+      dispatch(authActions.filterCategory(category));
     },
   };
 };

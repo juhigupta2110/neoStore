@@ -171,3 +171,17 @@ export const changePasswordAsync = (data, authKey) => {
     authKey,
   };
 };
+
+export const filterCategory = (data) => {
+  return {
+    type: types.GET_SELECTED_CATEGORY,
+    payload: data,
+  };
+};
+
+export const getFilteredData = (data) => {
+  return {
+    type: types.GET_FILTERED_DATA,
+    payload: data,
+  };
+};

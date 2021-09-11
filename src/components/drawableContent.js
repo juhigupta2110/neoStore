@@ -127,8 +127,21 @@ class DrawableContent extends React.Component {
             <View style={styles.drawerItemStyle}>
               <Text
                 style={styles.textStyle}
-                onPress={() => this.props.navigation.navigate('AllProducts')}>
+                onPress={() => {
+                  this.props.filterCategorySelected('');
+                  setTimeout(
+                    () => this.props.navigation.navigate('AllProducts'),
+                    500,
+                  );
+                }}>
                 Home
+              </Text>
+            </View>
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('Dashboard')}>
+                Dashboard
               </Text>
             </View>
             <View style={styles.drawerItemStyle}>
@@ -141,7 +154,13 @@ class DrawableContent extends React.Component {
             <View style={styles.drawerItemStyle}>
               <Text
                 style={styles.textStyle}
-                onPress={() => this.props.navigation.navigate('AllProducts')}>
+                onPress={() => {
+                  this.props.filterCategorySelected('');
+                  setTimeout(
+                    () => this.props.navigation.navigate('AllProducts'),
+                    500,
+                  );
+                }}>
                 All Products
               </Text>
             </View>
@@ -167,6 +186,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => {
       dispatch(authActions.logout());
+    },
+    filterCategorySelected: (category) => {
+      dispatch(authActions.filterCategory(category));
+    },
+    FilteredData: (data) => {
+      dispatch(authActions.getFilteredData(data));
     },
   };
 };

@@ -20,6 +20,7 @@ import AddAddress from '../screens/addAddress';
 import EditAddress from '../screens/editAddress';
 import myAccount from '../screens/myAccount';
 import StoreLocator from '../screens/storeLocator';
+import Dashboard from '../screens/dashboard';
 import Header from '../../components/header';
 import PlainHeader from '../../components/plainHeader';
 import CreateAccount from '../screens/createAccount';
@@ -169,6 +170,15 @@ const DrawerNavigations = () => {
               // header: (props) => <Header {...props} />,
             }
           }
+        />
+
+        <Drawer.Screen
+          name="Dashboard"
+          component={Dashboard}
+          options={{
+            headerShown: true,
+            header: (props) => <Header {...props} />,
+          }}
         />
 
         {/* <Drawer.Screen
