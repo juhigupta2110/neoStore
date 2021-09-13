@@ -1,6 +1,12 @@
 import * as React from 'react';
 
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   widthPercentageToDP as wp,
@@ -15,7 +21,7 @@ class CreateAccount extends React.Component {
   }
   render() {
     return (
-      <View style={styles.mainViewStyle}>
+      <SafeAreaView style={styles.mainViewStyle}>
         <Text style={styles.helloTextStyle}>Hello there!</Text>
         <Text style={styles.createAccountStyle}>CREATE AN ACCOUNT</Text>
 
@@ -58,7 +64,7 @@ class CreateAccount extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

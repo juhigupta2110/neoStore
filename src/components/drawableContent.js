@@ -31,6 +31,7 @@ class DrawableContent extends React.Component {
   };
 
   render() {
+    console.log('profile img...', this.props.loggerName.img);
     return (
       <View style={styles.mainViewStyle}>
         {this.props.loggerName.name.length > 0 ? (
@@ -38,7 +39,9 @@ class DrawableContent extends React.Component {
             <View style={styles.userStyle}>
               <Avatar.Image
                 size={hp('8%')}
-                source={require('../assets/images/user.png')}
+                source={{
+                  uri: this.props.loggerName.img,
+                }}
               />
 
               <View style={styles.welcomeUserStyle}>
@@ -52,8 +55,16 @@ class DrawableContent extends React.Component {
             <View style={styles.drawerItemStyle}>
               <Text
                 style={styles.textStyle}
-                onPress={() => this.props.navigation.navigate('AllProducts')}>
+                onPress={() => this.props.navigation.navigate('Dashboard')}>
                 Home
+              </Text>
+            </View>
+
+            <View style={styles.drawerItemStyle}>
+              <Text
+                style={styles.textStyle}
+                onPress={() => this.props.navigation.navigate('AllProducts')}>
+                All Products
               </Text>
             </View>
 
@@ -130,7 +141,7 @@ class DrawableContent extends React.Component {
                 onPress={() => {
                   this.props.filterCategorySelected('');
                   setTimeout(
-                    () => this.props.navigation.navigate('AllProducts'),
+                    () => this.props.navigation.navigate('Dashboard'),
                     500,
                   );
                 }}>
@@ -201,7 +212,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(DrawableContent);
 const styles = StyleSheet.create({
   mainViewStyle: {
     backgroundColor: 'rgba(255,255,255,0.5)',
-    marginTop: hp('5%'),
+    marginTop: hp('8%'),
+    paddingLeft: wp('3%'),
   },
   drawerItemStyle: {
     height: hp('5%'),

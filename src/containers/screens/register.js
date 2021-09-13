@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   RadioButton,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/Feather';
@@ -35,13 +36,13 @@ class Register extends React.Component {
       confirmPassword: '',
       mobile: 123456,
       emailValidate: true,
-      eye: false,
+      eyePswd: false,
+      eyeCnfrmPswd: false,
     };
   }
 
   handleValidEmail = (val) => {
-    let emailChk =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let emailChk = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
     if (!emailChk.test(val)) {
       this.setState({
@@ -50,10 +51,16 @@ class Register extends React.Component {
     } else this.setState({emailValidate: true});
   };
 
-  handleEyeClick = () => {
-    this.setState({
-      eye: !this.state.eye,
-    });
+  handleEyeClick = (val) => {
+    if (val === 'eyePswd') {
+      this.setState({
+        eyePswd: !this.state.eyePswd,
+      });
+    } else {
+      this.setState({
+        eyeCnfrmPswd: !this.state.eyeCnfrmPswd,
+      });
+    }
   };
 
   handleRegisterClick = () => {
@@ -107,7 +114,7 @@ class Register extends React.Component {
 
   render() {
     return (
-      <View style={styles.mainViewStyle}>
+      <SafeAreaView style={styles.mainViewStyle}>
         <Text style={styles.helloTextStyle}>Hello there!</Text>
         <Text style={styles.createAccountStyle}>Create a new Account</Text>
         <View>
@@ -144,20 +151,64 @@ class Register extends React.Component {
               <Text style={styles.errorFormInputStyle}>Invalid email</Text>
             </Animatable.View>
           )}
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Password"
-            maxLength={15}
-            autoCapitalize="none"
-            onChangeText={(text) => this.setState({password: text})}
-          />
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Confirm Password"
-            maxLength={15}
-            autoCapitalize="none"
-            onChangeText={(text) => this.setState({confirmPassword: text})}
-          />
+          <View style={styles.passwordViewStyle}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="Password"
+              maxLength={15}
+              autoCapitalize="none"
+              secureTextEntry={this.state.eyePswd ? false : true}
+              onChangeText={(text) => this.setState({password: text})}
+            />
+
+            {this.state.eyePswd ? (
+              <Icons
+                name="eye"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyePswd')}
+              />
+            ) : (
+              <Icons
+                name="eye-off"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyePswd')}
+              />
+            )}
+          </View>
+
+          <View style={styles.passwordViewStyle}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="Confirm Password"
+              maxLength={15}
+              autoCapitalize="none"
+              secureTextEntry={this.state.eyeCnfrmPswd ? false : true}
+              onChangeText={(text) => this.setState({confirmPassword: text})}
+            />
+
+            {this.state.eyeCnfrmPswd ? (
+              <Icons
+                name="eye"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('')}
+              />
+            ) : (
+              <Icons
+                name="eye-off"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('')}
+              />
+            )}
+          </View>
+
           <TextInput
             style={styles.textInputStyle}
             keyboardType="numeric"
@@ -224,7 +275,7 @@ class Register extends React.Component {
             <Text style={styles.signUpTextStyle}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -242,6 +293,14 @@ const styles = StyleSheet.create({
   mainViewStyle: {
     paddingTop: hp('2%'),
     alignItems: 'center',
+  },
+  passwordViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  eyeIconStyle: {
+    marginLeft: -wp('10%'),
   },
   helloTextStyle: {
     color: Colors.GREY,

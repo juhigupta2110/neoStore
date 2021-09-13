@@ -10,6 +10,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import IconAwesome from 'react-native-vector-icons/FontAwesome';
 import {connect} from 'react-redux';
 import Toast from 'react-native-toast-message';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {Colors} from '../assets/styles/colors';
 import * as authActions from '../redux/auth/actions/authActions';
@@ -24,35 +25,26 @@ const Header = (props) => {
       });
     } else {
       props.getCart(props.logger.token);
-      props.navigation.navigate('Cart');
+      props.navi.navigate('Cart');
     }
   };
 
   return (
-    <View>
+    <SafeAreaView style={{backgroundColor: Colors.yellowBg}}>
       <View style={styles.mainViewStyle}>
         <View style={styles.leftViewStyle}>
-          <Icon
-            name="menu"
-            size={30}
-            onPress={() => props.navigation.openDrawer()}
-          />
+          <Icon name="menu" size={30} onPress={() => props.navi.openDrawer()} />
         </View>
+
+        <View style={styles.midViewStyle}>
+          <Text style={styles.midTextStyle}>{props.headingName}</Text>
+        </View>
+
         <View style={styles.rightViewStyle}>
           <Icons name="cart-outline" size={30} onPress={() => clickHandler()} />
         </View>
       </View>
-
-      {/* <View style={styles.searchViewStyle}>
-        <TextInput
-          style={styles.searchStyle}
-          placeholder="Search NeoStore"
-          maxLength={30}
-        />
-
-        <Icons name="search-outline" size={30} />
-      </View> */}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -74,21 +66,33 @@ export default connect(mapStateToProps, mapDispatchToProps)(Header);
 const styles = StyleSheet.create({
   mainViewStyle: {
     // backgroundColor: Colors.HeaderColor1,
-    height: hp('5%'),
+    height: hp('7%'),
     justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
     paddingHorizontal: wp('5%'),
-    paddingTop: hp('1%'),
-    marginTop: hp('3%'),
+    backgroundColor: Colors.HeaderColor1,
+    // paddingTop: hp('1%'),
+    // marginTop: hp('3%'),
   },
   leftViewStyle: {
-    flex: 4,
+    flex: 1,
     flexDirection: 'row',
   },
   rightViewStyle: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+  },
+  midViewStyle: {
+    flex: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  midTextStyle: {
+    color: Colors.BLACK,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   searchViewStyle: {
     justifyContent: 'center',

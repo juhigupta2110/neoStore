@@ -7,6 +7,7 @@ export const LOGIN = 'LOGIN';
 export const LOGIN_ASYNC = 'LOGIN_ASYNC';
 export const LOGOUT = 'LOGOUT';
 export const CHANGE_PASSWORD_ASYNC = 'CHANGE_PASSWORD_ASYNC';
+export const ADD_IMG = 'ADD_IMG';
 
 // FOR REGISTER
 
@@ -56,3 +57,4 @@ export const PLACE_ORDER_ASYNC = 'PLACE_ORDER_ASYNC';
 export const VIEW_ORDERS_ASYNC = 'VIEW_ORDERS_ASYNC';
 export const VIEW_ORDERS = 'VIEW_ORDERS';
 export const PRODUCTS_ORDERED = 'PRODUCTS_ORDERED';
+export const ORDER_ID_FOR_HEADER = 'ORDER_ID_FOR_HEADER';

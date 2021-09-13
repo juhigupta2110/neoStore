@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   RadioButton,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/Feather';
@@ -85,7 +86,7 @@ class EditAddress extends React.Component {
       });
     }
     return (
-      <View style={styles.mainViewStyle}>
+      <SafeAreaView style={styles.mainViewStyle}>
         <Text style={styles.createAccountStyle}>Add a new address</Text>
         <View>
           <TextInput
@@ -137,7 +138,7 @@ class EditAddress extends React.Component {
             <Text style={styles.signUpTextStyle}>Save</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

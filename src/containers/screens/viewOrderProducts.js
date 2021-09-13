@@ -1,6 +1,13 @@
 import * as React from 'react';
 
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -18,7 +25,7 @@ import RenderOrderItemProduct from '../../components/renderOrderItemProduct';
 
 const htmlContent = `<html>
     <body>
-      <h1>NeoStore Invoice</h1>
+      <h1>abc</h1>
     </body>
   </html>`;
 
@@ -40,9 +47,9 @@ const ViewOrderProducts = (props) => {
       console.log('error in fileView..', e);
     }
   };
-
+  console.log('props..', props);
   return (
-    <View style={styles.flatlistStyle}>
+    <SafeAreaView style={styles.flatlistStyle}>
       <FlatList
         data={props.route.params.products}
         keyExtractor={(item) => item.productId.id}
@@ -52,13 +59,20 @@ const ViewOrderProducts = (props) => {
             img={item.productId.mainImage}
             name={item.productId.name}
             price={item.productId.price}
+            id={item.productId.id}
+            productName={item.productId.name}
+            subs={item.productId.subImages}
+            stars={item.productId.avgRating}
+            description={item.productId.description}
+            features={item.productId.features}
+            navigation={props.navigation}
           />
         )}
       />
       <TouchableOpacity style={styles.placeOrderStyle} onPress={createPDF}>
         <Text style={styles.placeOrderText}>Download Invoice</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 export default ViewOrderProducts;

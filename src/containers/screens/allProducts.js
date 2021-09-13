@@ -13,6 +13,7 @@ import {
   Pressable,
   TextInput,
   TouchableHighlightBase,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -275,7 +276,7 @@ class AllProducts extends React.Component {
     var uniqueColorNames = [...new Set(colorNames)];
 
     return (
-      <View>
+      <SafeAreaView>
         <Modal transparent={true} visible={this.state.showFiterModal}>
           <View style={{backgroundColor: '#000000aa', flex: 1}}>
             <View style={styles.headingViewStyle}>
@@ -483,7 +484,7 @@ class AllProducts extends React.Component {
           )}
           keyExtractor={(item) => item.id}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }

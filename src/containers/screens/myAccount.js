@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   RadioButton,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/Feather';
@@ -31,51 +32,103 @@ class MyAccount extends React.Component {
 
   render() {
     return (
-      <View style={styles.mainViewStyle}>
-        <View>
-          <Text style={styles.createAccountStyle}>My Account </Text>
-        </View>
+      <SafeAreaView style={styles.mainViewStyle}>
         <View>
           <TouchableOpacity
             style={styles.signUpStyle}
             onPress={() => this.props.navigation.navigate('ViewOrder')}>
+            <Icon
+              name="document-outline"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
             <Text style={styles.signUpTextStyle}>Order History</Text>
-            <Icon name="arrow-forward" size={22} color={Colors.WHITE} />
+            <Icon
+              name="arrow-forward"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
           </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity
             style={styles.signUpStyle}
             onPress={() => this.props.navigation.navigate('Cart')}>
+            <Icon
+              name="cart-outline"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
             <Text style={styles.signUpTextStyle}>My Cart</Text>
-            <Icon name="arrow-forward" size={22} color={Colors.WHITE} />
+            <Icon
+              name="arrow-forward"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
           </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity
             style={styles.signUpStyle}
             onPress={() => this.props.navigation.navigate('ShippingAddresses')}>
+            <Icon
+              name="rocket-outline"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
             <Text style={styles.signUpTextStyle}>Shipping Address</Text>
-            <Icon name="arrow-forward" size={22} color={Colors.WHITE} />
+            <Icon
+              name="arrow-forward"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
           </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity
             style={styles.signUpStyle}
             onPress={() => this.props.navigation.navigate('EditProfile')}>
+            <Icon
+              name="create-outline"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
             <Text style={styles.signUpTextStyle}>Edit Profile</Text>
-            <Icon name="arrow-forward" size={22} color={Colors.WHITE} />
+            <Icon
+              name="arrow-forward"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
           </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity
             style={styles.signUpStyle}
             onPress={() => this.props.navigation.navigate('ResetPassword')}>
+            <Icon
+              name="refresh-outline"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
             <Text style={styles.signUpTextStyle}>Reset Password</Text>
-            <Icon name="arrow-forward" size={22} color={Colors.WHITE} />
+            <Icon
+              name="arrow-forward"
+              size={22}
+              color={Colors.WHITE}
+              style={styles.iconStyle}
+            />
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -88,8 +141,9 @@ export default connect(null, mapDispatchToProps)(MyAccount);
 
 const styles = StyleSheet.create({
   mainViewStyle: {
-    paddingTop: hp('2%'),
     alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: hp('5%'),
   },
   helloTextStyle: {
     color: Colors.GREY,
@@ -136,6 +190,10 @@ const styles = StyleSheet.create({
   signUpTextStyle: {
     fontSize: 18,
     color: Colors.WHITE,
+    flex: 8,
+  },
+  iconStyle: {
+    flex: 1,
   },
   radioButtonViewStyle: {
     marginVertical: hp('1%'),

@@ -1,6 +1,15 @@
 import * as React from 'react';
 
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  Animated,
+  Button,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -10,6 +19,9 @@ import StarRating from 'react-native-star-rating';
 import {connect} from 'react-redux';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import Share from 'react-native-share';
+import Swiper from 'react-native-swiper';
+import {BlurView} from '@react-native-community/blur';
+import Stars from 'react-native-stars';
 
 import {Colors} from '../../assets/styles/colors';
 import * as authActions from '../../redux/auth/actions/authActions';
@@ -19,17 +31,40 @@ class ProductDetail extends React.Component {
     super(props);
     this.state = {
       quantity: 1,
+      giveStars: false,
     };
   }
 
   clickHandler = () => {
-    let data = {
-      productId: this.props.route.params.id,
-      quantity: this.state.quantity,
-    };
-    let authKey = this.props.logger.token;
+    if (this.props.logger.token === '') {
+      Toast.show({
+        text1: 'Please login',
+        visibilityTime: 800,
+        position: 'bottom',
+      });
+    } else {
+      let data = {
+        productId: this.props.route.params.id,
+        quantity: this.state.quantity,
+      };
+      let authKey = this.props.logger.token;
 
-    this.props.addThisToCart(data, authKey);
+      this.props.addThisToCart(data, authKey);
+    }
+  };
+
+  clickRatingHandler = () => {
+    if (this.props.logger.token === '') {
+      Toast.show({
+        text1: 'Please login',
+        visibilityTime: 800,
+        position: 'bottom',
+      });
+    } else {
+      this.setState({
+        giveStars: true,
+      });
+    }
   };
 
   myCustomeShare = async () => {
@@ -46,21 +81,74 @@ class ProductDetail extends React.Component {
   };
 
   render() {
+    console.log('props coming in....', this.props);
     return (
-      <View style={styles.mainCompStyle}>
-        <View>
+      <SafeAreaView style={styles.mainCompStyle}>
+        <Swiper
+          autoplay={false}
+          loop={false}
+          showsButtons={true}
+          width={wp('100%')}
+          height={hp('60%')}
+          style={styles.swiperStyle}>
           <Image
             source={{
               uri: this.props.route.params.subs[0],
             }}
             style={styles.imgStyle}
           />
-          <TouchableOpacity
-            onPress={this.myCustomeShare}
-            style={styles.shareViewStyle}>
-            <Icon name="share-outline" size={35} />
-          </TouchableOpacity>
-        </View>
+          <Image
+            source={{
+              uri: this.props.route.params.subs[1],
+            }}
+            style={styles.imgStyle}
+          />
+        </Swiper>
+
+        {this.state.giveStars ? (
+          <View style={styles.giveStarView}>
+            <Stars
+              default={this.props.route.params.stars}
+              count={5}
+              half={true}
+              starSize={50}
+              fullStar={
+                <Icon name={'star'} style={[styles.myStarStyle]} size={30} />
+              }
+              emptyStar={
+                <Icon
+                  name={'star-outline'}
+                  size={30}
+                  style={[styles.myStarStyle, styles.myEmptyStarStyle]}
+                />
+              }
+              halfStar={
+                <Icon
+                  name={'star-half'}
+                  size={30}
+                  style={[styles.myStarStyle]}
+                />
+              }
+            />
+            <Button
+              title="Done"
+              onPress={() => {
+                Toast.show({
+                  text1: 'Thankyou for your feedback !',
+                  visibilityTime: 800,
+                  position: 'bottom',
+                });
+                this.setState({giveStars: false});
+              }}
+            />
+          </View>
+        ) : null}
+
+        <TouchableOpacity
+          onPress={this.myCustomeShare}
+          style={styles.shareViewStyle}>
+          <Icon name="share-outline" size={35} />
+        </TouchableOpacity>
 
         <View style={styles.contentStyle}>
           <View>
@@ -118,14 +206,20 @@ class ProductDetail extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.addToCartButtonViewStyle}>
+        <View style={styles.addToCartBottomViewStyle}>
+          <TouchableOpacity
+            style={styles.addToCartButtonViewStyle}
+            onPress={() => this.clickRatingHandler()}>
+            <Text style={styles.addToCartButtonTextStyle}>Give Rating</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.addToCartButtonViewStyle}
             onPress={() => this.clickHandler()}>
             <Text style={styles.addToCartButtonTextStyle}>Add to cart</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -149,34 +243,39 @@ const styles = StyleSheet.create({
     width: wp('80%'),
     height: hp('30%'),
     alignSelf: 'center',
+    justifyContent: 'center',
     marginVertical: hp('1%'),
     backgroundColor: Colors.HeaderColor5,
   },
-  mainCompStyle: {
-    // width: wp('95%'),
-    // height: hp('60%'),
-    flex: 1,
-    borderWidth: 0.5,
-    borderColor: Colors.GreyBorder,
-    shadowRadius: 1,
-    shadowColor: Colors.GREY,
-    backgroundColor: 'white',
-    margin: 10,
-    //marginTop: '20%',
-    borderRadius: 10,
-    padding: 15,
+  giveStarView: {
+    width: wp('40%'),
+    height: hp('10%'),
+    backgroundColor: Colors.LIGHTGREY,
     alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.GREY,
   },
+
+  mainCompStyle: {
+    height: hp('85%'),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  swiperStyle: {
+    marginLeft: wp('7%'),
+    marginTop: hp('2%'),
+  },
+
   imgStyle: {
     width: wp('85%'),
     height: hp('40%'),
     marginRight: 10,
-    marginBottom: 10,
   },
   contentStyle: {
     width: wp('90%'),
     marginLeft: wp('2%'),
-    marginTop: hp('1%'),
   },
   contentTextStyle: {
     fontSize: 18,
@@ -209,15 +308,13 @@ const styles = StyleSheet.create({
   cartRatingViewStyle: {
     width: wp('90%'),
     height: hp('3.5%'),
-    marginTop: hp('1%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
   addQuantityViewStyle: {
     flexDirection: 'row',
-
-    marginTop: hp('5%'),
+    marginBottom: hp('2%'),
     marginRight: wp('10%'),
     alignItems: 'center',
     justifyContent: 'center',
@@ -247,24 +344,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  addToCartButtonViewStyle: {
+  addToCartBottomViewStyle: {
+    flexDirection: 'row',
     width: wp('80%'),
     height: hp('4%'),
+    justifyContent: 'space-between',
+    // marginTop: hp('5%'),
+  },
+  addToCartButtonViewStyle: {
+    width: wp('38%'),
     backgroundColor: Colors.ORANGE,
-    marginVertical: hp('8%'),
+    // marginVertical: hp('8%'),
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'center',
-    marginRight: wp('2%'),
+    // alignSelf: 'center',
+    // marginRight: wp('2%'),
   },
   addToCartButtonTextStyle: {
     fontSize: 18,
     color: Colors.WHITE,
   },
   shareViewStyle: {
-    justifyContent: 'flex-end',
     alignItems: 'flex-end',
     width: wp('85%'),
-    marginTop: hp('1%'),
+    marginTop: hp('2%'),
+  },
+
+  myStarStyle: {
+    color: 'yellow',
+    backgroundColor: 'transparent',
+    textShadowColor: 'black',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 2,
+  },
+  myEmptyStarStyle: {
+    color: 'white',
   },
 });

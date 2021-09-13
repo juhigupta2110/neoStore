@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -13,8 +20,6 @@ import {Colors} from '../../assets/styles/colors';
 import RenderAddressItem from '../../components/renderAddressItem';
 
 export default function ShippingAddresses(props) {
-  console.log('i think it restarted...');
-  console.log('inside shipping addresses');
   const dispatch = useDispatch();
 
   const addresses = useSelector((state) => state.getAddressReducer);
@@ -30,7 +35,7 @@ export default function ShippingAddresses(props) {
   };
 
   return (
-    <View style={styles.flatlistStyle}>
+    <SafeAreaView style={styles.flatlistStyle}>
       <FlatList
         data={addresses}
         keyExtractor={(item) => item._id}
@@ -51,7 +56,7 @@ export default function ShippingAddresses(props) {
         onPress={() => handleAddAddress()}>
         <Text style={styles.addAddressTextStyle}>Add Another Address</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

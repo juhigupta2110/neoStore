@@ -200,7 +200,7 @@ export function* workerAddAddressAsync(action) {
     if (response.status === 200) {
       console.log('response for added address..', response);
       Toast.show({
-        text1: response.message,
+        text1: response.data.message,
         visibilityTime: 500,
         position: 'bottom',
       });
@@ -454,6 +454,8 @@ export function* workerLoginAsyncTesting(action) {
         payload: {
           name: response.data.data.firstName,
           token: response.data.data.token,
+          lastName: response.data.data.lastName,
+          mobile: response.data.data.mobile,
         },
       });
 

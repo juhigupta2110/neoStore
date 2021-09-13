@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {View, Text, StyleSheet, SafeAreaView, TextInput} from 'react-native';
 import {
@@ -15,6 +15,8 @@ import {Colors} from '../assets/styles/colors';
 import * as authActions from '../redux/auth/actions/authActions';
 
 const PlainHeader = (props) => {
+  //const [orderIdPart, setOrderIdPart] = useState(props.orderId.)
+
   const clickHandler = () => {
     if (props.logger.token === '') {
       Toast.show({
@@ -24,33 +26,45 @@ const PlainHeader = (props) => {
       });
     } else {
       props.getCart(props.logger.token);
-      props.navigation.navigate('Cart');
+      props.navi.navigate('Cart');
     }
   };
   console.log('props in plain header..', props);
   return (
-    <View>
+    <SafeAreaView style={{backgroundColor: Colors.tabYellowColor}}>
       <View style={styles.mainViewStyle}>
         <View style={styles.leftViewStyle}>
           <Icon
             name="arrow-left"
             size={30}
-            onPress={() => props.navigation.goBack()}
+            onPress={() => props.navi.goBack()}
           />
         </View>
-        <View style={styles.pageNameViewStyle}>
-          <Text style={styles.pageNameTextStyle}>{props.route.name}</Text>
+        <View style={styles.midViewStyle}>
+          <Text style={styles.midTextStyle}>
+            {props.headingName === 'ViewOrderProducts'
+              ? `Order no. : ${props.orderId.slice(0, 8)}.....`
+              : props.headingName}
+          </Text>
         </View>
+
         <View style={styles.rightViewStyle}>
-          <Icons name="cart-outline" size={30} onPress={() => clickHandler()} />
+          {props.cartVisible ? (
+            <Icons
+              name="cart-outline"
+              size={30}
+              onPress={() => clickHandler()}
+            />
+          ) : null}
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const mapStateToProps = (state) => ({
   logger: state.loginReducer,
+  orderId: state.orderIdReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -65,24 +79,34 @@ export default connect(mapStateToProps, mapDispatchToProps)(PlainHeader);
 
 const styles = StyleSheet.create({
   mainViewStyle: {
-    backgroundColor: Colors.tabYellowColor,
-    height: hp('10%'),
+    // backgroundColor: Colors.HeaderColor1,
+    height: hp('7%'),
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
     flexDirection: 'row',
-    paddingHorizontal: wp('2%'),
-    // paddingTop: hp('5%'),
+    paddingHorizontal: wp('5%'),
+    backgroundColor: Colors.HeaderColor1,
+    // paddingTop: hp('1%'),
+    // marginTop: hp('3%'),
   },
   leftViewStyle: {
-    flex: 4,
+    flex: 1,
     flexDirection: 'row',
-    // alignItems: 'center',
   },
   rightViewStyle: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginRight: wp('3%'),
+    justifyContent: 'flex-end',
+  },
+  midViewStyle: {
+    flex: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  midTextStyle: {
+    color: Colors.BLACK,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   searchViewStyle: {
     justifyContent: 'center',

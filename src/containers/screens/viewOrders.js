@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  SafeAreaView,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -32,7 +39,7 @@ export default function ViewOrder(props) {
   //   };
 
   return (
-    <View style={styles.flatlistStyle}>
+    <SafeAreaView style={styles.flatlistStyle}>
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id}
@@ -50,7 +57,7 @@ export default function ViewOrder(props) {
         onPress={() => handleAddAddress()}>
         <Text style={styles.addAddressTextStyle}>Add Another Address</Text>
       </TouchableOpacity> */}
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -185,3 +185,17 @@ export const getFilteredData = (data) => {
     payload: data,
   };
 };
+
+export const addImgProfile = (data) => {
+  return {
+    type: types.ADD_IMG,
+    payload: data,
+  };
+};
+
+export const saveOrderId = (data) => {
+  return {
+    type: types.ORDER_ID_FOR_HEADER,
+    payload: data,
+  };
+};

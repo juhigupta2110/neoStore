@@ -12,9 +12,13 @@ import * as authActions from '../redux/auth/actions/authActions';
 
 import {Colors} from '../assets/styles/colors';
 
+// id, productName, subs[], stars, description, features, price
+
 class RenderOrderItemProduct extends React.Component {
   constructor(props) {
     super(props);
+
+    console.log('props coming ..', this.props);
 
     this.state = {
       quantity: this.props.quantity,
@@ -26,18 +30,32 @@ class RenderOrderItemProduct extends React.Component {
   //             name={item.productId.name}
   //             price={item.productId.price}
 
+  goToProductDetail = () => {
+    this.props.navigation.navigate('ProductDetail', {
+      id: this.props.id,
+      productName: this.props.productName,
+      subs: this.props.subs,
+      stars: this.props.stars,
+      description: this.props.description,
+      features: this.props.features,
+      price: this.props.price,
+    });
+  };
+
   render() {
     return (
       <View style={styles.topMainCompStyle}>
         <View style={styles.mainCompStyle}>
-          <View style={styles.imgStyle}>
+          <TouchableOpacity
+            style={styles.imgStyle}
+            onPress={() => this.goToProductDetail()}>
             <Image
               source={{
                 uri: this.props.img,
               }}
               style={styles.imgStyle}
             />
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.contentStyle}>
             <View style={{marginBottom: 5}}>

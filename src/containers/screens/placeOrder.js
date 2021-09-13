@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
@@ -92,7 +93,7 @@ class PlaceOrder extends React.Component {
 
   render() {
     return (
-      <View>
+      <SafeAreaView>
         <Modal
           animationType="slide"
           transparent={true}
@@ -105,11 +106,11 @@ class PlaceOrder extends React.Component {
             <View style={styles.modalView}>
               <Text style={styles.modalText}>Order Placed !!!</Text>
 
-              {/* <Pressable
+              <Pressable
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => this.setModalVisible(!this.state.modalVisible)}>
                 <Text style={styles.textStyle}>ok</Text>
-              </Pressable> */}
+              </Pressable>
             </View>
           </View>
         </Modal>
@@ -181,7 +182,7 @@ class PlaceOrder extends React.Component {
           onPress={() => this.placeOrder()}>
           <Text style={styles.placeOrderText}>Order Now</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
   },
   flatlistStyle: {
     //flex: 1,
-    height: hp('55%'),
+    height: hp('65%'),
   },
   grandTotalViewStyle: {
     width: wp('100%'),
@@ -262,6 +263,7 @@ const styles = StyleSheet.create({
     height: hp('7%'),
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'flex-end',
     backgroundColor: Colors.ORANGE,
   },
   placeOrderText: {

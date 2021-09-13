@@ -189,9 +189,24 @@ class Dashboard extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() =>
-                this.props.filterCategorySelected(this.state.images[1].name)
-              }>
+              onPress={() => {
+                this.props.filterCategorySelected(this.state.images[1].name);
+                this.props.getProducts();
+
+                setTimeout(() => {
+                  var DATA_filtered = this.props.data.filter(
+                    this.searchFilters,
+                  );
+                  this.props.FilteredData(DATA_filtered);
+                  setTimeout(() => {
+                    console.log('fitered category...', this.props.fiteredCat);
+                    console.log('filtered Data....', this.props.filteredData);
+                    this.props.navigation.navigate('AllProducts');
+                  }, 1000);
+                }, 1500);
+
+                //setTimeout(this.myFunction, 1500);
+              }}>
               <Image
                 style={styles.swipeImg}
                 source={{uri: this.state.images[1].img}}
@@ -199,9 +214,24 @@ class Dashboard extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() =>
-                this.props.filterCategorySelected(this.state.images[2].name)
-              }>
+              onPress={() => {
+                this.props.filterCategorySelected(this.state.images[2].name);
+                this.props.getProducts();
+
+                setTimeout(() => {
+                  var DATA_filtered = this.props.data.filter(
+                    this.searchFilters,
+                  );
+                  this.props.FilteredData(DATA_filtered);
+                  setTimeout(() => {
+                    console.log('fitered category...', this.props.fiteredCat);
+                    console.log('filtered Data....', this.props.filteredData);
+                    this.props.navigation.navigate('AllProducts');
+                  }, 1000);
+                }, 1500);
+
+                //setTimeout(this.myFunction, 1500);
+              }}>
               <Image
                 style={styles.swipeImg}
                 source={{uri: this.state.images[2].img}}
@@ -209,9 +239,24 @@ class Dashboard extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() =>
-                this.props.filterCategorySelected(this.state.images[3].name)
-              }>
+              onPress={() => {
+                this.props.filterCategorySelected(this.state.images[3].name);
+                this.props.getProducts();
+
+                setTimeout(() => {
+                  var DATA_filtered = this.props.data.filter(
+                    this.searchFilters,
+                  );
+                  this.props.FilteredData(DATA_filtered);
+                  setTimeout(() => {
+                    console.log('fitered category...', this.props.fiteredCat);
+                    console.log('filtered Data....', this.props.filteredData);
+                    this.props.navigation.navigate('AllProducts');
+                  }, 1000);
+                }, 1500);
+
+                //setTimeout(this.myFunction, 1500);
+              }}>
               <Image
                 style={styles.swipeImg}
                 source={{uri: this.state.images[3].img}}

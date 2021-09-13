@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Modal,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
@@ -47,7 +48,7 @@ class Cart extends React.Component {
 
   render() {
     return (
-      <View>
+      <SafeAreaView>
         {console.log(
           'product details coming in cart...',
           this.props.cartItems.products,
@@ -99,7 +100,7 @@ class Cart extends React.Component {
             </TouchableOpacity>
           </View>
         )}
-      </View>
+      </SafeAreaView>
     );
   }
 }

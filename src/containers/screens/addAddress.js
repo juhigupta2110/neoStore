@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   RadioButton,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/Feather';
@@ -50,12 +51,26 @@ class AddAddress extends React.Component {
       country: this.state.country,
     };
 
-    this.props.addAddressFunction(
-      this.props.logger.token,
-      data,
-      this.props.navigation,
-      this.refresh,
-    );
+    if (
+      this.state.addressLine === '' ||
+      this.state.pincode === '' ||
+      this.state.city === '' ||
+      this.state.state === '' ||
+      this.state.country === ''
+    ) {
+      Toast.show({
+        text1: 'Please give the complete address',
+        visibilityTime: 800,
+        position: 'bottom',
+      });
+    } else {
+      this.props.addAddressFunction(
+        this.props.logger.token,
+        data,
+        this.props.navigation,
+        this.refresh,
+      );
+    }
   };
 
   showToastMsg = (msg) => {
@@ -68,7 +83,7 @@ class AddAddress extends React.Component {
 
   render() {
     return (
-      <View style={styles.mainViewStyle}>
+      <SafeAreaView style={styles.mainViewStyle}>
         <Text style={styles.createAccountStyle}>Add a new address</Text>
         <View>
           <TextInput
@@ -116,7 +131,7 @@ class AddAddress extends React.Component {
             <Text style={styles.signUpTextStyle}>Add address</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

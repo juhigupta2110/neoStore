@@ -9,6 +9,7 @@ import {
   Picker,
   Modal,
   Pressable,
+  SafeAreaView,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -39,8 +40,7 @@ class Login extends React.Component {
   }
 
   handleValidEmail = (val) => {
-    let emailChk =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let emailChk = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
     if (!emailChk.test(val)) {
       this.setState({
@@ -86,7 +86,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <View style={styles.mainViewStyle}>
+      <SafeAreaView style={styles.mainViewStyle}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -187,7 +187,7 @@ class Login extends React.Component {
         </View>
 
         {console.log(this.state.selectedValue)}
-      </View>
+      </SafeAreaView>
     );
   }
 }

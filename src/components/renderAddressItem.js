@@ -1,6 +1,13 @@
 import * as React from 'react';
 
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -74,7 +81,25 @@ class RenderAddressItems extends React.Component {
             <Icon
               name="trash-outline"
               size={22}
-              onPress={() => this.deleteAddress()}
+              onPress={() => {
+                Alert.alert('Delete this address?', '', [
+                  {
+                    text: 'Cancel',
+                    onPress: () => {
+                      //this.setState({logout: false});
+                      //this.onClick();
+                    },
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'OK',
+                    onPress: () => {
+                      //this.setState({logout: true});
+                      this.deleteAddress();
+                    },
+                  },
+                ]);
+              }}
             />
             <Icon
               name="create-outline"

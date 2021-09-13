@@ -26,9 +26,12 @@ class RenderOrderItems extends React.Component {
   }
 
   onClick = () => {
-    this.props.navigation.navigate('ViewOrderProducts', {
-      products: this.props.products,
-    });
+    this.props.setOrderId(this.props.id);
+    setTimeout(() => {
+      this.props.navigation.navigate('ViewOrderProducts', {
+        products: this.props.products,
+      });
+    }, 500);
   };
 
   render() {
@@ -80,6 +83,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     getAddress: (authKey) => {
       dispatch(authActions.getAddressAsync(authKey));
+    },
+    setOrderId: (data) => {
+      dispatch(authActions.saveOrderId(data));
     },
   };
 };

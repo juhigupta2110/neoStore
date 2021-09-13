@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   RadioButton,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icons from 'react-native-vector-icons/Feather';
@@ -31,13 +32,26 @@ class ResetPassword extends React.Component {
       new_password: '',
       confirmNewPassword: '',
       eye: false,
+      eyeOldPswd: false,
+      eyeNewPswd: false,
+      eyeCnfrmPswd: false,
     };
   }
 
-  handleEyeClick = () => {
-    this.setState({
-      eye: !this.state.eye,
-    });
+  handleEyeClick = (val) => {
+    if (val === 'eyeOldPswd') {
+      this.setState({
+        eyeOldPswd: !this.state.eyeOldPswd,
+      });
+    } else if (val === 'eyeNewPswd') {
+      this.setState({
+        eyeNewPswd: !this.state.eyeNewPswd,
+      });
+    } else if (val === 'eyeCnfrmPswd') {
+      this.setState({
+        eyeCnfrmPswd: !this.state.eyeCnfrmPswd,
+      });
+    }
   };
 
   handleClick = () => {
@@ -63,48 +77,91 @@ class ResetPassword extends React.Component {
 
   render() {
     return (
-      <View style={styles.mainViewStyle}>
-        <Text style={styles.createAccountStyle}>Reset Password</Text>
+      <SafeAreaView style={styles.mainViewStyle}>
         <View>
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Old password"
-            autoCapitalize="none"
-            secureTextEntry={this.state.eye ? false : true}
-            maxLength={20}
-            onChangeText={(text) => this.setState({old_password: text})}
-          />
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="New password"
-            maxLength={25}
-            secureTextEntry={this.state.eye ? false : true}
-            autoCapitalize="none"
-            onChangeText={(text) => this.setState({new_password: text})}
-          />
+          <View style={styles.passwordViewStyle}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="Old password"
+              autoCapitalize="none"
+              secureTextEntry={this.state.eyeOldPswd ? false : true}
+              maxLength={20}
+              onChangeText={(text) => this.setState({old_password: text})}
+            />
+            {this.state.eyeOldPswd ? (
+              <Icons
+                name="eye"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyeOldPswd')}
+              />
+            ) : (
+              <Icons
+                name="eye-off"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyeOldPswd')}
+              />
+            )}
+          </View>
 
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder="Confirm new password"
-            maxLength={10}
-            secureTextEntry={this.state.eye ? false : true}
-            onChangeText={(text) => this.setState({confirmNewPassword: text})}
-          />
-          {this.state.eye ? (
-            <Icon
-              name="eye"
-              size={22}
-              onPress={() => this.setState({eye: !this.state.eye})}
-              color={Colors.GREY}
+          <View style={styles.passwordViewStyle}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="New password"
+              maxLength={25}
+              secureTextEntry={this.state.eyeNewPswd ? false : true}
+              autoCapitalize="none"
+              onChangeText={(text) => this.setState({new_password: text})}
             />
-          ) : (
-            <Icon
-              name="eye-off"
-              size={22}
-              onPress={() => this.setState({eye: !this.state.eye})}
-              color={Colors.GREY}
+
+            {this.state.eyeNewPswd ? (
+              <Icons
+                name="eye"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyeNewPswd')}
+              />
+            ) : (
+              <Icons
+                name="eye-off"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyeNewPswd')}
+              />
+            )}
+          </View>
+
+          <View style={styles.passwordViewStyle}>
+            <TextInput
+              style={styles.textInputStyle}
+              placeholder="Confirm new password"
+              maxLength={10}
+              secureTextEntry={this.state.eyeCnfrmPswd ? false : true}
+              onChangeText={(text) => this.setState({confirmNewPassword: text})}
             />
-          )}
+            {this.state.eyeCnfrmPswd ? (
+              <Icons
+                name="eye"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyeCnfrmPswd')}
+              />
+            ) : (
+              <Icons
+                name="eye-off"
+                color="grey"
+                size={hp('2.5%')}
+                style={styles.eyeIconStyle}
+                onPress={() => this.handleEyeClick('eyeCnfrmPswd')}
+              />
+            )}
+          </View>
 
           <TouchableOpacity
             style={styles.signUpStyle}
@@ -112,7 +169,7 @@ class ResetPassword extends React.Component {
             <Text style={styles.signUpTextStyle}>Reset</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -177,5 +234,13 @@ const styles = StyleSheet.create({
   },
   radioButtonIconStyle: {
     marginLeft: wp('2%'),
+  },
+  eyeIconStyle: {
+    marginLeft: -wp('10%'),
+  },
+  passwordViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
 });
