@@ -53,6 +53,7 @@ class DrawableContent extends React.Component {
             </View>
 
             <View style={styles.drawerItemStyle}>
+              <Icon name="home-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('Dashboard')}>
@@ -61,6 +62,7 @@ class DrawableContent extends React.Component {
             </View>
 
             <View style={styles.drawerItemStyle}>
+              <Icon name="apps-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('AllProducts')}>
@@ -69,6 +71,7 @@ class DrawableContent extends React.Component {
             </View>
 
             <View style={styles.drawerItemStyle}>
+              <Icon name="body-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('MyAccount')}>
@@ -77,6 +80,7 @@ class DrawableContent extends React.Component {
             </View>
 
             <View style={styles.drawerItemStyle}>
+              <Icon name="cart-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('Cart')}>
@@ -85,6 +89,7 @@ class DrawableContent extends React.Component {
             </View>
 
             <View style={styles.drawerItemStyle}>
+              <Icon name="bookmarks-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('ViewOrder')}>
@@ -93,6 +98,7 @@ class DrawableContent extends React.Component {
             </View>
 
             <View style={styles.drawerItemStyle}>
+              <Icon name="map-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('StoreLocator')}>
@@ -101,6 +107,7 @@ class DrawableContent extends React.Component {
             </View>
 
             <View style={styles.drawerItemStyle}>
+              <Icon name="exit-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={
@@ -136,6 +143,7 @@ class DrawableContent extends React.Component {
               <Text style={styles.neoStoreHeadingStyle}> NeoStore</Text>
             </View>
             <View style={styles.drawerItemStyle}>
+              <Icon name="home-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => {
@@ -149,6 +157,7 @@ class DrawableContent extends React.Component {
               </Text>
             </View>
             <View style={styles.drawerItemStyle}>
+              <Icon name="home-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('Dashboard')}>
@@ -156,6 +165,7 @@ class DrawableContent extends React.Component {
               </Text>
             </View>
             <View style={styles.drawerItemStyle}>
+              <Icon name="home-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('CreateAccount')}>
@@ -163,6 +173,7 @@ class DrawableContent extends React.Component {
               </Text>
             </View>
             <View style={styles.drawerItemStyle}>
+              <Icon name="home-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => {
@@ -176,6 +187,7 @@ class DrawableContent extends React.Component {
               </Text>
             </View>
             <View style={styles.drawerItemStyle}>
+              <Icon name="home-outline" size={26} color={Colors.brown} />
               <Text
                 style={styles.textStyle}
                 onPress={() => this.props.navigation.navigate('StoreLocator')}>
@@ -225,7 +237,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: hp('2.5%'),
     marginHorizontal: wp('2.5%'),
-    color: Colors.BLACK,
+    color: Colors.brown,
   },
   neoStoreHeadingStyle: {
     justifyContent: 'center',

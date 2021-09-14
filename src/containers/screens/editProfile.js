@@ -32,8 +32,8 @@ class EditProfile extends React.Component {
 
     this.state = {
       checked: '',
-      firstName: '',
-      lastName: '',
+      firstName: this.props.loggerName.name,
+      lastName: this.props.loggerName.lastName,
       email: '',
       password: '',
       confirmPassword: '',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     marginVertical: hp('1%'),
     width: wp('90%'),
-    height: hp('5%'),
+    height: hp('6%'),
     paddingLeft: wp('0.5%'),
     fontSize: 18,
     borderBottomWidth: 0.5,

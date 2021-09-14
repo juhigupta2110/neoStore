@@ -10,6 +10,7 @@ import productsOrdered from './productsOrdered';
 import filteredCategory from './fiteredCategory';
 import filteredData from './filteredData';
 import orderIdReducer from './orderIdReducer';
+import orderPlacedIdReducer from './orderPlacedId';
 
 export default combineReducers({
   loginReducer,
@@ -23,4 +24,5 @@ export default combineReducers({
   filteredCategory,
   filteredData,
   orderIdReducer,
+  orderPlacedIdReducer,
 });

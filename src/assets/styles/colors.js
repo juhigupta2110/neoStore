@@ -27,7 +27,8 @@ export const Colors = {
   tabYellowColor: '#efa862',
   LIGHTGREY: '#f4f4f4',
   GreyBorder: '#e0dede',
-  yellowBg: '#5c4500',
+  yellowBg: '#336688',
   yellowBgHeader1: '#ee6802',
   yellowBgHeader2: '#fecf50',
+  brown: '#a83c06',
 };

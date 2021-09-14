@@ -91,13 +91,13 @@ export function* workerPlaceOrderAsync(action) {
       return result;
     });
     if (response.status === 200) {
-      console.log('response for added address..', response);
-      // yield put({
-      //   type: types.PRODUCTS_ORDERED,
-      //   payload: action.productsOrdered,
-      // });
+      console.log('response for place order..', response);
+      yield put({
+        type: types.ORDER_PLACED_ID,
+        payload: response.data.data,
+      });
       Toast.show({
-        text1: response.message,
+        text1: response.data.message,
         visibilityTime: 500,
         position: 'bottom',
       });

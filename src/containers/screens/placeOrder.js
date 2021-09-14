@@ -39,6 +39,8 @@ class PlaceOrder extends React.Component {
       id: this.props.route.params.id,
       modalVisible: false,
     };
+    console.log('inside constr');
+    this.refreshAddresses();
   }
   myFunction = () => {
     this.setState({
@@ -58,6 +60,10 @@ class PlaceOrder extends React.Component {
       this.props.navigation.navigate('ShippingAddresses');
     }, 1500);
   };
+  refreshAddresses = () => {
+    console.log('refresh called...');
+    console.log(this.props.addresses);
+  };
 
   refresh = () => {
     console.log('inside place order refresh...');
@@ -66,9 +72,9 @@ class PlaceOrder extends React.Component {
       modalVisible: true,
     });
 
-    setTimeout(() => this.setState({modalVisible: false}), 500);
+    // setTimeout(() => this.setState({modalVisible: false}), 500);
 
-    setTimeout(() => this.props.navigation.navigate('AllProducts'), 3000);
+    // setTimeout(() => this.props.navigation.navigate('AllProducts'), 3000);
 
     //let authKey = this.props.logger.token;
     //this.props.getAddress(authKey);
@@ -91,24 +97,42 @@ class PlaceOrder extends React.Component {
     }
   };
 
+  chkValidAdrs = (item) => {
+    return item._id === this.props.route.params.id;
+  };
+
+  setModalVisible = () => {
+    this.setState({
+      modalVisible: !this.state.modalVisible,
+    });
+  };
+
   render() {
+    console.log('props in place order...', this.props);
     return (
       <SafeAreaView>
         <Modal
           animationType="slide"
           transparent={true}
           visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            this.setState(!this.state.modalVisible);
-          }}>
+          // onRequestClose={() => {
+          //   Alert.alert('Modal has been closed.');
+          // }}
+        >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                Order Id: {this.props.orderPlacedDetails._id}
+              </Text>
+
               <Text style={styles.modalText}>Order Placed !!!</Text>
 
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => this.setModalVisible(!this.state.modalVisible)}>
+                onPress={() => {
+                  this.setModalVisible();
+                  this.props.navigation.navigate('AllProducts');
+                }}>
                 <Text style={styles.textStyle}>ok</Text>
               </Pressable>
             </View>
@@ -119,7 +143,11 @@ class PlaceOrder extends React.Component {
             <Text style={styles.modalTextStyle}>Order Placed !!!</Text>
           </View>
         </Modal> */}
-        {this.props.route.params.addressLine === '' ? null : (
+
+        {console.log(this.props.addresses.filter(this.chkValidAdrs).length)}
+
+        {this.props.route.params.addressLine === '' ||
+        this.props.addresses.filter(this.chkValidAdrs).length === 0 ? null : (
           <View style={styles.topMainCompStyle}>
             <View style={styles.mainCompStyle}>
               <View style={{marginBottom: 5}}>
@@ -139,7 +167,7 @@ class PlaceOrder extends React.Component {
           </View>
         )}
 
-        {this.props.addresses === [] ? (
+        {this.props.addresses.length === 0 ? (
           <TouchableOpacity
             style={styles.addAddressViewStyle}
             onPress={() => this.handleAddAddress()}>
@@ -191,6 +219,7 @@ const mapStateToProps = (state) => ({
   cartItems: state.getCartReducer,
   logger: state.loginReducer,
   addresses: state.getAddressReducer,
+  orderPlacedDetails: state.orderPlacedIdReducer,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -224,6 +253,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: Colors.GREEN,
     fontWeight: 'bold',
+    marginVertical: hp('2%'),
   },
 
   addAddressViewStyle: {
@@ -242,7 +272,8 @@ const styles = StyleSheet.create({
   },
   flatlistStyle: {
     //flex: 1,
-    height: hp('65%'),
+    height: hp('53%'),
+    flexGrow: 0,
   },
   grandTotalViewStyle: {
     width: wp('100%'),

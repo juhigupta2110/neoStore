@@ -199,3 +199,10 @@ export const saveOrderId = (data) => {
     payload: data,
   };
 };
+
+export const orderPlacedId = (data) => {
+  return {
+    type: types.ORDER_PLACED_ID,
+    payload: data,
+  };
+};

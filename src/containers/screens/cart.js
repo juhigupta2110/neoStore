@@ -53,7 +53,7 @@ class Cart extends React.Component {
           'product details coming in cart...',
           this.props.cartItems.products,
         )}
-        {!this.props.cartItems.products ? (
+        {this.props.cartItems.products.length === 0 ? (
           <Image
             source={require('../../assets/images/no_data_available.png')}
             style={styles.imgStyle}

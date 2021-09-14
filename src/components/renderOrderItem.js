@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import StarRating from 'react-native-star-rating';
 import {connect} from 'react-redux';
 import * as authActions from '../redux/auth/actions/authActions';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {Colors} from '../assets/styles/colors';
 
@@ -36,25 +37,41 @@ class RenderOrderItems extends React.Component {
 
   render() {
     return (
-      <View style={styles.topMainCompStyle}>
-        <View style={styles.mainCompStyle}>
-          <TouchableOpacity
-            style={{marginBottom: 5}}
-            onPress={() => this.onClick()}>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>
-              ORDER ID--{this.props.id}
+      //<View style={styles.topMainCompStyle}>
+      <LinearGradient
+        colors={['#e5ee68', '#ddedf0', '#5fbcc6']}
+        style={styles.mainCompStyle}>
+        <TouchableOpacity
+          style={styles.rowViewStyle}
+          onPress={() => this.onClick()}>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1}}>
+              Order ID:
             </Text>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>
-              ORDER Date--{this.props.orderDate}
+            <Text style={{fontSize: 14, flex: 2}}>{this.props.id}</Text>
+          </View>
+          <View style={{flexDirection: 'row', marginTop: hp('0.5%')}}>
+            <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1}}>
+              Order date
             </Text>
+            <Text style={{fontSize: 14, flex: 2}}>{this.props.orderDate}</Text>
+          </View>
+          {/* <View style={{flexDirection: 'row'}}>
+              <Text style={{fontWeight: 'bold', fontSize: 18, flex: 1}}>
+                ORDER Date--
+              </Text>
+              <Text style={{fontSize: 12, flex: 2}}>
+                {this.props.orderDate}
+              </Text>
+            </View> */}
 
-            {/* <FlatList
+          {/* <FlatList
               data={this.props.items}
               renderItem={({item}) => <RenderOrderItemProduct />}
               keyExtractor={(item) => item._id}
             /> */}
-          </TouchableOpacity>
-          {/* <View style={styles.iconViewStyle}>
+        </TouchableOpacity>
+        {/* <View style={styles.iconViewStyle}>
             <Icon
               name="trash-outline"
               size={22}
@@ -66,8 +83,8 @@ class RenderOrderItems extends React.Component {
               onPress={() => this.editAddress()}
             />
           </View> */}
-        </View>
-      </View>
+      </LinearGradient>
+      //  </View>
     );
   }
 }
@@ -96,23 +113,42 @@ const styles = StyleSheet.create({
     height: hp('12%'),
     width: wp('93%'),
     borderRadius: 10,
-    backgroundColor: Colors.WHITE,
+    //backgroundColor: Colors.WHITE,
     marginHorizontal: wp('2%'),
     marginVertical: hp('1%'),
     paddingHorizontal: wp('3%'),
     alignItems: 'center',
   },
   mainCompStyle: {
-    flexDirection: 'row',
+    //  flexDirection: 'row',
     width: wp('93%'),
     height: hp('10%'),
     borderRadius: 10,
-    backgroundColor: Colors.WHITE,
+    borderWidth: 0.5,
+    borderColor: Colors.GREY,
     marginHorizontal: wp('2%'),
     marginVertical: hp('1%'),
     paddingHorizontal: wp('3%'),
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+
+    //opacity: 0.75,
+  },
+  rowViewStyle: {
+    flex: 1,
+    marginTop: hp('2%'),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lableColumn: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contentColumn: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   imgStyle: {
     width: 80,

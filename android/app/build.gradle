@@ -137,6 +137,15 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
+buildscript {
+    ext{
+
+ supportLibVersion = "28.0.0"         //ADD THIS
+       googlePlayServicesVersion = "17.0.0" //ADD THIS
+       androidMapsUtilsVersion = "0.5+" 
+    }
+}
+
     splits {
         abi {
             reset()
@@ -183,6 +192,18 @@ android {
 }
 
 dependencies {
+
+ 
+
+ implementation(project(':react-native-maps')){
+       exclude group: 'com.google.android.gms', module: 'play-services-base'
+       exclude group: 'com.google.android.gms', module: 'play-services-maps'
+   }
+   implementation 'com.google.android.gms:play-services-base:17.2.1'
+   implementation project(':react-native-html-to-pdf')
+   implementation project(':react-native-file-viewer')
+   implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

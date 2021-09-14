@@ -18,6 +18,7 @@ import {
 import {connect} from 'react-redux';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {Colors} from '../../assets/styles/colors';
 import * as authActions from '../../redux/auth/actions/authActions';

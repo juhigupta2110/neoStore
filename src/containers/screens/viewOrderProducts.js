@@ -34,7 +34,7 @@ const ViewOrderProducts = (props) => {
     let options = {
       html: htmlContent,
       fileName: 'test2',
-      directory: 'Documents',
+      directory: 'Download',
     };
 
     let file = await RNHTMLtoPDF.convert(options);
