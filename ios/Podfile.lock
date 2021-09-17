@@ -348,6 +348,8 @@ PODS:
     - React-Core (= 0.63.2)
     - React-cxxreact (= 0.63.2)
     - React-jsi (= 0.63.2)
+  - RNBootSplash (3.2.5):
+    - React-Core
   - RNCAsyncStorage (1.15.7):
     - React-Core
   - RNCPicker (1.8.1):
@@ -462,6 +464,7 @@ DEPENDENCIES:
   - React-RCTText (from `../node_modules/react-native/Libraries/Text`)
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
   - RNFileViewer (from `../node_modules/react-native-file-viewer`)
@@ -561,6 +564,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNBootSplash:
+    :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCPicker:
@@ -631,6 +636,7 @@ SPEC CHECKSUMS:
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
+  RNBootSplash: 75faf048f66eebe1650e91afdb8c2205fefc1870
   RNCAsyncStorage: 7102fe8985f889579a3ae148d957bbb3f308122b
   RNCPicker: 914b557e20b3b8317b084aca9ff4b4edb95f61e4
   RNFileViewer: 83cc066ad795b1f986791d03b56fe0ee14b6a69f

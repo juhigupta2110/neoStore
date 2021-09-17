@@ -16,6 +16,7 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* neoStore_appTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* neoStore_appTests.m */; };
 		57375A7BC23CB19A167FF4A8 /* libPods-neoStore_app-neoStore_appTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB6110FBB542C9F1DB83A5A7 /* libPods-neoStore_app-neoStore_appTests.a */; };
+		801CE1D726F3A8C800359636 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 801CE1D626F3A8C800359636 /* BootSplash.storyboard */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		DD88D1DC5239D895D50B69DF /* libPods-neoStore_app.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 334328651B5A8BF842038122 /* libPods-neoStore_app.a */; };
 		E562459345733554B797D136 /* libPods-neoStore_app-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B0057327E5EF1AA5F40306 /* libPods-neoStore_app-tvOSTests.a */; };
@@ -60,6 +61,7 @@
 		545724E92CB2E31384DA1B45 /* Pods-neoStore_app-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-neoStore_app-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-neoStore_app-tvOSTests/Pods-neoStore_app-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		656133DF149DFF2B4A7D820A /* Pods-neoStore_app-neoStore_appTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-neoStore_app-neoStore_appTests.release.xcconfig"; path = "Target Support Files/Pods-neoStore_app-neoStore_appTests/Pods-neoStore_app-neoStore_appTests.release.xcconfig"; sourceTree = "<group>"; };
 		76B0057327E5EF1AA5F40306 /* libPods-neoStore_app-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-neoStore_app-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		801CE1D626F3A8C800359636 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = neoStore_app/BootSplash.storyboard; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = neoStore_app/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ACEEB85D498FFB39833742D8 /* libPods-neoStore_app-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-neoStore_app-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF635F7FF0FCF992DD816CC8 /* Pods-neoStore_app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-neoStore_app.release.xcconfig"; path = "Target Support Files/Pods-neoStore_app/Pods-neoStore_app.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				801CE1D626F3A8C800359636 /* BootSplash.storyboard */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -349,6 +352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				801CE1D726F3A8C800359636 /* BootSplash.storyboard in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);

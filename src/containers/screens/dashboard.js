@@ -14,6 +14,7 @@ import {
   TextInput,
   TouchableHighlightBase,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -64,6 +65,7 @@ class Dashboard extends React.Component {
       searchItem: '',
       searchClicked: false,
       clearSearchClicked: false,
+      loader: true,
 
       images: [
         {
@@ -130,35 +132,6 @@ class Dashboard extends React.Component {
     }
     return (
       <SafeAreaView>
-        {/* <View style={styles.searchViewStyle}>
-          <TextInput
-            style={styles.searchStyle}
-            placeholder="Search NeoStore"
-            maxLength={30}
-            onChangeText={(text) => this.setState({searchItem: text})}
-          />
-
-          <Icon
-            name="search-outline"
-            size={30}
-            onPress={() => {
-              this.setState({searchClicked: true});
-              var DATA_search = this.props.data.filter(this.searchFilters);
-
-              this.setState({updatedList: DATA_search});
-            }}
-          />
-        </View>
-        {this.state.searchClicked === true ? (
-          <TouchableOpacity
-            onPress={() => {
-              this.setState({clearSearchClicked: true});
-              this.clearSearch();
-            }}>
-            <Text style={styles.ClearSearchTextStyle}>Clear Search</Text>
-          </TouchableOpacity>
-        ) : null} */}
-
         <View style={{width: wp('100%'), height: hp('40%')}}>
           <Swiper autoplay loop height={250}>
             <TouchableOpacity
@@ -269,25 +242,29 @@ class Dashboard extends React.Component {
           <Text style={styles.title}>Top 10 products for you</Text>
         </View>
 
-        <FlatList
-          style={styles.flatListStyle}
-          data={this.state.sortedList.slice(0, 10)}
-          renderItem={({item}) => (
-            <RenderProduct
-              productName={item.name}
-              imageUrl={item.mainImageUrl}
-              category={item.category.name}
-              description={item.description}
-              price={item.price}
-              stars={item.avgRating}
-              features={item.features}
-              subImages={item.subImagesUrl}
-              id={item.id}
-              {...this.props}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-        />
+        {this.state.sortedList.length === 0 ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList
+            style={styles.flatListStyle}
+            data={this.state.sortedList.slice(0, 10)}
+            renderItem={({item}) => (
+              <RenderProduct
+                productName={item.name}
+                imageUrl={item.mainImageUrl}
+                category={item.category.name}
+                description={item.description}
+                price={item.price}
+                stars={item.avgRating}
+                features={item.features}
+                subImages={item.subImagesUrl}
+                id={item.id}
+                {...this.props}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        )}
       </SafeAreaView>
     );
   }

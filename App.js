@@ -17,6 +17,8 @@ import DrawerNavigations from './src/containers/navigation/AppNavigations';
 import Login from './src/containers/screens/login';
 import createSagaMiddleware from '@redux-saga/core';
 
+import RNBootSplash from 'react-native-bootsplash';
+
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
@@ -32,6 +34,10 @@ SagaMiddleware.run(rootSaga);
 export const persistor = persistStore(store);
 
 export default class App extends Component {
+  componentDidMount() {
+    RNBootSplash.hide({fade: true});
+  }
+
   render() {
     return (
       <Provider store={store}>
