@@ -12,6 +12,12 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {
+  LoginManager,
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager,
+} from 'react-native-fbsdk-next';
 
 import {Colors} from '../../assets/styles/colors';
 
@@ -19,6 +25,70 @@ class CreateAccount extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  // getInfoFromToken = (token) => {
+  //   console.log('token..', token);
+  //   const PROFILE_REQUEST_PARAMS = {
+  //     fields: {
+  //       string: 'id, name,  first_name, last_name',
+  //     },
+  //   };
+  //   const profileRequest = new GraphRequest(
+  //     '/me',
+  //     {token, parameters: PROFILE_REQUEST_PARAMS},
+  //     (error, result) => {
+  //       if (error) {
+  //       } else {
+  //         console.log('result...', result);
+  //         // setFacebookData(result);
+  //       }
+  //     },
+  //   );
+  //   new GraphRequestManager().addRequest(profileRequest).start();
+  // };
+
+  handleFacebookLogin = () => {
+    LoginManager.logInWithPermissions(['public_profile', 'email']).then(
+      function (result) {
+        if (result.isCancelled) {
+          //toastMessage('Login cancelled');
+        } else {
+          AccessToken.getCurrentAccessToken().then((data) => {
+            const accessToken = data.accessToken.toString();
+
+            console.log('access token...', accessToken);
+
+            // getInfoFromToken = (token) => {
+            //  console.log('token..', token);
+            const PROFILE_REQUEST_PARAMS = {
+              fields: {
+                string: 'id, name,  first_name, last_name',
+              },
+            };
+            const profileRequest = new GraphRequest(
+              '/me',
+              {accessToken, parameters: PROFILE_REQUEST_PARAMS},
+              (error, result) => {
+                if (error) {
+                } else {
+                  console.log('result...', result);
+                  // setFacebookData(result);
+                }
+              },
+            );
+            new GraphRequestManager().addRequest(profileRequest).start();
+            // };
+
+            // this.getInfoFromToken(accessToken);
+          });
+        }
+      },
+      function (error) {
+        console.error(error);
+      },
+    );
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.mainViewStyle}>
@@ -33,7 +103,8 @@ class CreateAccount extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.loginLinkStyle, {backgroundColor: Colors.BLUE}]}>
+            style={[styles.loginLinkStyle, {backgroundColor: Colors.BLUE}]}
+            onPress={() => this.handleFacebookLogin()}>
             <Icon name="logo-facebook" size={25} color={Colors.WHITE} />
             <Text style={styles.loginLinkTextStyle}>Login with Facebook</Text>
           </TouchableOpacity>
